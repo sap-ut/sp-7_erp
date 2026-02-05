@@ -1,277 +1,361 @@
 // DOM Elements
-const loginForm = document.getElementById('loginFormElement');
-const togglePassword = document.getElementById('togglePassword');
-const passwordInput = document.getElementById('password');
-const resetBtn = document.getElementById('resetBtn');
-const activeCellIndicator = document.getElementById('activeCellIndicator');
-const formulaInput = document.getElementById('formulaInput');
-const connectionStatus = document.getElementById('connectionStatus');
-const currentTime = document.getElementById('currentTime');
+const normalInterface = document.getElementById('normalInterface');
+const excelModal = document.getElementById('excelModal');
+const openPIBtns = document.querySelectorAll('#openPIMode, #openPIMode2');
+const closeExcelBtn = document.getElementById('closeExcel');
+const generateGridBtn = document.getElementById('generateGrid');
+const saveDataBtn = document.getElementById('saveData');
+const excelContainer = document.getElementById('excelContainer');
+const rowCountInput = document.getElementById('rowCount');
+const colCountInput = document.getElementById('colCount');
+const cellCountSpan = document.getElementById('cellCount');
 
-// Generate Excel grid cells
-function generateGridCells() {
-    const cellsGrid = document.querySelector('.cells-grid');
+// Open Excel Grid Mode
+openPIBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+        normalInterface.style.display = 'none';
+        excelModal.style.display = 'flex';
+        generateGrid(); // Generate default grid
+    });
+});
+
+// Close Excel Grid Mode
+closeExcelBtn.addEventListener('click', function() {
+    excelModal.style.display = 'none';
+    normalInterface.style.display = 'flex';
+});
+
+// Generate Excel Grid
+function generateGrid() {
+    const rows = parseInt(rowCountInput.value) || 10;
+    const cols = parseInt(colCountInput.value) || 8;
     
-    for (let row = 1; row <= 10; row++) {
-        for (let col = 1; col <= 10; col++) {
-            const cell = document.createElement('div');
-            cell.className = 'excel-cell';
-            cell.dataset.row = row;
-            cell.dataset.col = col;
-            cell.dataset.ref = `${String.fromCharCode(64 + col)}${row}`;
-            
-            // Make the cell clickable and focusable
-            cell.tabIndex = 0;
-            
-            // Add cell click handler
-            cell.addEventListener('click', handleCellClick);
-            cell.addEventListener('focus', handleCellFocus);
-            
-            cellsGrid.appendChild(cell);
-        }
+    // Clear previous grid
+    excelContainer.innerHTML = '';
+    
+    // Create grid container
+    const grid = document.createElement('div');
+    grid.className = 'excel-grid';
+    grid.id = 'excelGrid';
+    
+    // Create column headers (A, B, C...)
+    const colHeaderRow = document.createElement('div');
+    colHeaderRow.className = 'excel-row';
+    
+    // Empty corner cell
+    const cornerCell = document.createElement('div');
+    cornerCell.className = 'excel-col-header excel-row-header';
+    cornerCell.style.width = '40px';
+    colHeaderRow.appendChild(cornerCell);
+    
+    // Column headers
+    for (let c = 0; c < cols; c++) {
+        const colHeader = document.createElement('div');
+        colHeader.className = 'excel-col-header';
+        colHeader.textContent = String.fromCharCode(65 + c); // A, B, C...
+        colHeader.style.width = '120px';
+        colHeader.dataset.col = c;
+        colHeaderRow.appendChild(colHeader);
     }
+    
+    grid.appendChild(colHeaderRow);
+    
+    // Create data rows
+    for (let r = 0; r < rows; r++) {
+        const row = document.createElement('div');
+        row.className = 'excel-row';
+        
+        // Row header (1, 2, 3...)
+        const rowHeader = document.createElement('div');
+        rowHeader.className = 'excel-row-header';
+        rowHeader.textContent = r + 1;
+        rowHeader.style.width = '40px';
+        rowHeader.dataset.row = r;
+        row.appendChild(rowHeader);
+        
+        // Data cells
+        for (let c = 0; c < cols; c++) {
+            const cell = document.createElement('input');
+            cell.className = 'excel-cell';
+            cell.type = 'text';
+            cell.dataset.row = r;
+            cell.dataset.col = c;
+            cell.dataset.address = `${String.fromCharCode(65 + c)}${r + 1}`;
+            
+            // Set default headers for first row
+            if (r === 0) {
+                cell.className = 'excel-cell header';
+                cell.placeholder = 'Column ' + String.fromCharCode(65 + c);
+                cell.value = getDefaultHeader(c);
+            } else if (r === 1 && c === 0) {
+                cell.value = 'Sample Data';
+            }
+            
+            // Add event listeners
+            cell.addEventListener('focus', handleCellFocus);
+            cell.addEventListener('input', updateCellCount);
+            
+            row.appendChild(cell);
+        }
+        
+        grid.appendChild(row);
+    }
+    
+    excelContainer.appendChild(grid);
+    updateCellCount();
+    
+    // Focus on first data cell
+    const firstCell = document.querySelector('.excel-cell[data-row="1"][data-col="0"]');
+    if (firstCell) firstCell.focus();
 }
 
-// Handle cell click
-function handleCellClick(e) {
-    const cell = e.target;
-    const ref = cell.dataset.ref;
-    const row = parseInt(cell.dataset.row);
-    const col = parseInt(cell.dataset.col);
-    
-    // Update active cell indicator position
-    const cellWidth = 100 / 10; // Percentage
-    const cellHeight = 100 / 10;
-    
-    activeCellIndicator.style.width = `${cellWidth}%`;
-    activeCellIndicator.style.height = `${cellHeight}%`;
-    activeCellIndicator.style.left = `${(col - 1) * cellWidth}%`;
-    activeCellIndicator.style.top = `${(row - 1) * cellHeight}%`;
-    
-    // Update formula bar
-    formulaInput.textContent = `Selected: ${ref}`;
-    
-    // Add active class to cell
-    document.querySelectorAll('.excel-cell').forEach(c => c.classList.remove('active'));
-    cell.classList.add('active');
+// Get default header names
+function getDefaultHeader(colIndex) {
+    const headers = [
+        'Product ID',
+        'Product Name',
+        'Category',
+        'Quantity',
+        'Price',
+        'Supplier',
+        'Location',
+        'Status'
+    ];
+    return headers[colIndex] || `Column ${String.fromCharCode(65 + colIndex)}`;
 }
 
 // Handle cell focus
 function handleCellFocus(e) {
     const cell = e.target;
-    const ref = cell.dataset.ref;
-    formulaInput.textContent = `Cell ${ref}: Enter value...`;
+    const address = cell.dataset.address;
+    const value = cell.value;
+    
+    // Update status bar
+    const statusBar = document.querySelector('.excel-status span:first-child');
+    if (statusBar) {
+        statusBar.textContent = `Selected: ${address}`;
+    }
+    
+    // Highlight row and column
+    document.querySelectorAll('.excel-cell').forEach(c => {
+        c.style.backgroundColor = '';
+    });
+    
+    const row = cell.dataset.row;
+    const col = cell.dataset.col;
+    
+    // Highlight entire row
+    document.querySelectorAll(`.excel-cell[data-row="${row}"]`).forEach(c => {
+        if (c !== cell) c.style.backgroundColor = '#f8f9fa';
+    });
+    
+    // Highlight entire column
+    document.querySelectorAll(`.excel-cell[data-col="${col}"]`).forEach(c => {
+        if (c !== cell) c.style.backgroundColor = '#f8f9fa';
+    });
 }
 
-// Toggle password visibility
-togglePassword.addEventListener('click', function() {
-    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-    passwordInput.setAttribute('type', type);
-    this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
-});
+// Update cell count
+function updateCellCount() {
+    const totalCells = document.querySelectorAll('.excel-cell').length;
+    const filledCells = Array.from(document.querySelectorAll('.excel-cell'))
+        .filter(cell => cell.value.trim() !== '').length;
+    
+    cellCountSpan.textContent = `Cells: ${filledCells}/${totalCells}`;
+}
 
-// Form submission
-loginForm.addEventListener('submit', function(e) {
-    e.preventDefault();
+// Save PI Data
+function savePIData() {
+    const rows = parseInt(rowCountInput.value) || 10;
+    const cols = parseInt(colCountInput.value) || 8;
     
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value;
-    const company = document.getElementById('company').value;
+    const data = [];
+    const headers = [];
     
-    // Validation
-    if (!username || !password || !company) {
-        showStatus('Please fill in all required fields', 'error');
-        return;
+    // Get headers from first row
+    for (let c = 0; c < cols; c++) {
+        const headerCell = document.querySelector(`.excel-cell[data-row="0"][data-col="${c}"]`);
+        headers.push(headerCell ? headerCell.value.trim() || `Column ${c+1}` : `Column ${c+1}`);
     }
     
-    if (password.length < 8) {
-        showStatus('Password must be at least 8 characters', 'error');
-        return;
-    }
-    
-    // Simulate login process
-    showStatus('Logging in...', 'loading');
-    
-    // Simulate API call
-    setTimeout(() => {
-        showStatus('Login successful! Redirecting...', 'success');
+    // Get data from remaining rows
+    for (let r = 1; r < rows; r++) {
+        const rowData = {};
+        let hasData = false;
         
-        // In real app, redirect to dashboard
-        // window.location.href = 'dashboard.html';
-        
-        // For demo, show success message
-        alert(`Welcome ${username}! (Company: ${company})`);
-        
-        // Reset form after successful login
-        setTimeout(() => {
-            loginForm.reset();
-            showStatus('Ready', 'connected');
-        }, 2000);
-        
-    }, 1500);
-});
-
-// Reset form
-resetBtn.addEventListener('click', function() {
-    if (confirm('Clear all form fields?')) {
-        loginForm.reset();
-        showStatus('Form reset', 'info');
-        
-        // Reset active cell
-        document.querySelectorAll('.excel-cell').forEach(c => c.classList.remove('active'));
-        formulaInput.textContent = 'Select a cell to edit...';
-        activeCellIndicator.style.width = '0';
-        activeCellIndicator.style.height = '0';
-    }
-});
-
-// Show status message
-function showStatus(message, type = 'info') {
-    const statusElem = document.querySelector('.status-content');
-    
-    // Update connection status
-    let icon = 'fa-circle';
-    let color = '#666';
-    
-    switch(type) {
-        case 'success':
-            icon = 'fa-check-circle';
-            color = '#28A745';
-            break;
-        case 'error':
-            icon = 'fa-times-circle';
-            color = '#DC3545';
-            break;
-        case 'loading':
-            icon = 'fa-spinner fa-spin';
-            color = '#0078D4';
-            break;
-        case 'connected':
-            icon = 'fa-circle';
-            color = '#28A745';
-            break;
-        case 'info':
-            icon = 'fa-info-circle';
-            color = '#FFC107';
-            break;
-    }
-    
-    // Create temporary status
-    const tempStatus = document.createElement('span');
-    tempStatus.className = 'status-text';
-    tempStatus.textContent = message;
-    tempStatus.style.color = color;
-    tempStatus.style.fontWeight = '500';
-    
-    // Add to status bar
-    const statusBar = document.querySelector('.status-content');
-    statusBar.appendChild(tempStatus);
-    
-    // Remove after 3 seconds
-    setTimeout(() => {
-        if (tempStatus.parentNode === statusBar) {
-            statusBar.removeChild(tempStatus);
+        for (let c = 0; c < cols; c++) {
+            const cell = document.querySelector(`.excel-cell[data-row="${r}"][data-col="${c}"]`);
+            const value = cell ? cell.value.trim() : '';
+            
+            if (value) hasData = true;
+            rowData[headers[c]] = value;
         }
-    }, 3000);
-    
-    // Update connection status indicator
-    if (type === 'connected') {
-        connectionStatus.innerHTML = `<i class="fas ${icon}" style="color: ${color};"></i> Connected`;
+        
+        if (hasData) {
+            data.push(rowData);
+        }
     }
+    
+    // Create download link
+    const jsonData = JSON.stringify(data, null, 2);
+    const blob = new Blob([jsonData], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `PI_Data_${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    alert(`PI data saved! ${data.length} records exported.`);
+    
+    // Return to normal interface
+    excelModal.style.display = 'none';
+    normalInterface.style.display = 'flex';
 }
 
-// Update current time
-function updateTime() {
-    const now = new Date();
-    const timeString = now.toLocaleTimeString('en-US', {
-        hour12: true,
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-    });
-    const dateString = now.toLocaleDateString('en-US', {
-        weekday: 'short',
-        month: 'short',
-        day: 'numeric'
-    });
+// Export to Excel (CSV)
+function exportToCSV() {
+    const rows = parseInt(rowCountInput.value) || 10;
+    const cols = parseInt(colCountInput.value) || 8;
     
-    currentTime.textContent = `${dateString} ${timeString}`;
+    const csvData = [];
+    
+    // Get headers
+    const headers = [];
+    for (let c = 0; c < cols; c++) {
+        const headerCell = document.querySelector(`.excel-cell[data-row="0"][data-col="${c}"]`);
+        headers.push(headerCell ? headerCell.value.trim() || `Column${c+1}` : `Column${c+1}`);
+    }
+    csvData.push(headers.join(','));
+    
+    // Get data rows
+    for (let r = 1; r < rows; r++) {
+        const rowValues = [];
+        let hasData = false;
+        
+        for (let c = 0; c < cols; c++) {
+            const cell = document.querySelector(`.excel-cell[data-row="${r}"][data-col="${c}"]`);
+            let value = cell ? cell.value.trim() : '';
+            
+            // Escape commas and quotes for CSV
+            if (value.includes(',') || value.includes('"')) {
+                value = `"${value.replace(/"/g, '""')}"`;
+            }
+            
+            if (value) hasData = true;
+            rowValues.push(value);
+        }
+        
+        if (hasData) {
+            csvData.push(rowValues.join(','));
+        }
+    }
+    
+    const csvContent = csvData.join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `PI_Data_${new Date().toISOString().split('T')[0]}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
 }
 
 // Keyboard shortcuts
 document.addEventListener('keydown', function(e) {
-    // F1 for help
-    if (e.key === 'F1') {
-        e.preventDefault();
-        alert('ERP Login Help:\n\n1. Use Tab to navigate\n2. Enter to submit\n3. Escape to cancel\n4. Ctrl+R to reset\n\nContact admin for support.');
-    }
-    
-    // Escape to blur active element
-    if (e.key === 'Escape') {
-        document.activeElement.blur();
-    }
-    
-    // Ctrl+R to reset form
-    if (e.ctrlKey && e.key === 'r') {
-        e.preventDefault();
-        resetBtn.click();
-    }
-    
-    // Enter on form field (except textarea) triggers submit
-    if (e.key === 'Enter' && 
-        e.target.tagName !== 'TEXTAREA' && 
-        e.target.type !== 'button' && 
-        e.target.type !== 'submit' &&
-        !e.target.classList.contains('excel-btn')) {
-        e.preventDefault();
-        const submitBtn = document.querySelector('.excel-btn-primary');
-        if (submitBtn) submitBtn.click();
-    }
-});
-
-// Tab navigation enhancement
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Tab') {
-        // Add visual feedback for tab navigation
-        const activeElement = document.activeElement;
-        if (activeElement.classList.contains('excel-input') || 
-            activeElement.classList.contains('excel-btn') ||
-            activeElement.classList.contains('excel-cell')) {
+    if (excelModal.style.display === 'flex') {
+        // F2 to edit current cell
+        if (e.key === 'F2') {
+            e.preventDefault();
+            const activeElement = document.activeElement;
+            if (activeElement.classList.contains('excel-cell')) {
+                activeElement.select();
+            }
+        }
+        
+        // Ctrl+S to save
+        if (e.ctrlKey && e.key === 's') {
+            e.preventDefault();
+            savePIData();
+        }
+        
+        // Ctrl+E to export CSV
+        if (e.ctrlKey && e.key === 'e') {
+            e.preventDefault();
+            exportToCSV();
+        }
+        
+        // Arrow key navigation
+        const activeCell = document.activeElement;
+        if (activeCell.classList.contains('excel-cell')) {
+            const row = parseInt(activeCell.dataset.row);
+            const col = parseInt(activeCell.dataset.col);
+            const rows = parseInt(rowCountInput.value) || 10;
+            const cols = parseInt(colCountInput.value) || 8;
             
-            activeElement.style.boxShadow = '0 0 0 2px rgba(0, 120, 212, 0.3)';
+            let nextCell = null;
             
-            setTimeout(() => {
-                activeElement.style.boxShadow = '';
-            }, 300);
+            switch(e.key) {
+                case 'ArrowUp':
+                    if (row > 0) {
+                        nextCell = document.querySelector(`.excel-cell[data-row="${row-1}"][data-col="${col}"]`);
+                    }
+                    break;
+                case 'ArrowDown':
+                    if (row < rows - 1) {
+                        nextCell = document.querySelector(`.excel-cell[data-row="${row+1}"][data-col="${col}"]`);
+                    }
+                    break;
+                case 'ArrowLeft':
+                    if (col > 0) {
+                        nextCell = document.querySelector(`.excel-cell[data-row="${row}"][data-col="${col-1}"]`);
+                    }
+                    break;
+                case 'ArrowRight':
+                    if (col < cols - 1) {
+                        nextCell = document.querySelector(`.excel-cell[data-row="${row}"][data-col="${col+1}"]`);
+                    }
+                    break;
+                case 'Tab':
+                    e.preventDefault();
+                    if (col < cols - 1) {
+                        nextCell = document.querySelector(`.excel-cell[data-row="${row}"][data-col="${col+1}"]`);
+                    } else if (row < rows - 1) {
+                        nextCell = document.querySelector(`.excel-cell[data-row="${row+1}"][data-col="0"]`);
+                    }
+                    break;
+                case 'Enter':
+                    e.preventDefault();
+                    if (row < rows - 1) {
+                        nextCell = document.querySelector(`.excel-cell[data-row="${row+1}"][data-col="${col}"]`);
+                    }
+                    break;
+            }
+            
+            if (nextCell) {
+                nextCell.focus();
+                nextCell.select();
+            }
         }
     }
 });
 
+// Event Listeners
+generateGridBtn.addEventListener('click', generateGrid);
+saveDataBtn.addEventListener('click', savePIData);
+
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
-    // Generate grid cells
-    generateGridCells();
-    
-    // Set initial time and update every second
-    updateTime();
-    setInterval(updateTime, 1000);
-    
-    // Focus on username field
-    setTimeout(() => {
-        document.getElementById('username').focus();
-    }, 500);
-    
-    // Simulate initial connection
-    setTimeout(() => {
-        showStatus('System ready', 'connected');
-    }, 1000);
-});
-
-// Window resize handler
-window.addEventListener('resize', function() {
-    // Update active cell indicator position if a cell is selected
-    const activeCell = document.querySelector('.excel-cell.active');
-    if (activeCell) {
-        handleCellClick({ target: activeCell });
-    }
+    // Add export CSV button
+    const exportBtn = document.createElement('button');
+    exportBtn.className = 'save-btn';
+    exportBtn.innerHTML = '<i class="fas fa-file-export"></i> Export CSV';
+    exportBtn.addEventListener('click', exportToCSV);
+    document.querySelector('.config-row').appendChild(exportBtn);
 });

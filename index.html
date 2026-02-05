@@ -3,110 +3,684 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ERP System - PI Mode</title>
-    <link rel="stylesheet" href="style.css">
+    <title>S.A.P.U.T. Glass Works Enterprise - Complete ERP System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --info: #17a2b8;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 0;
+            font-size: 13px;
+        }
+        
+        /* HEADER WITH NAVIGATION MENU */
+        .header-nav {
+            background: white;
+            padding: 0;
+            border-bottom: 1px solid #dee2e6;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        
+        .header-top {
+            background: linear-gradient(135deg, var(--primary), #1a2530);
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .company-name {
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        /* MAIN NAVIGATION MENU */
+        .main-nav {
+            background: white;
+            padding: 5px 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .nav-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2px;
+            align-items: center;
+        }
+        
+        .nav-item {
+            position: relative;
+        }
+        
+        .nav-link-custom {
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+        
+        .nav-link-custom:hover {
+            background: #f8f9fa;
+            color: var(--secondary);
+            border-color: #dee2e6;
+        }
+        
+        .nav-link-custom.active {
+            background: linear-gradient(135deg, var(--secondary), #2980b9);
+            color: white;
+            box-shadow: 0 2px 5px rgba(52, 152, 219, 0.3);
+        }
+        
+        .nav-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+            z-index: 1000;
+            display: none;
+            padding: 5px 0;
+        }
+        
+        .nav-item:hover .nav-dropdown {
+            display: block;
+        }
+        
+        .dropdown-item {
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #333;
+            text-decoration: none;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+        
+        .dropdown-item:hover {
+            background: #f8f9fa;
+            color: var(--secondary);
+        }
+        
+        .dropdown-divider {
+            height: 1px;
+            background: #dee2e6;
+            margin: 5px 0;
+        }
+        
+        /* CLEAN DASHBOARD */
+        .dashboard-welcome {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+        
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 4px solid var(--secondary);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+        
+        .recent-activity {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+        
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        
+        /* MODULE SECTIONS */
+        .module-section {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-header {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--secondary);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        /* FLOATING ACTIONS */
+        .float-actions {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+        
+        .action-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .action-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .nav-container {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                padding-bottom: 5px;
+            }
+            
+            .company-name {
+                font-size: 14px;
+            }
+            
+            .nav-link-custom {
+                font-size: 11px;
+                padding: 8px 12px;
+            }
+        }
+        
+        /* GLASS LINE INDICATORS */
+        .line-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            margin: 1px;
+        }
+        
+        .indicator-c { background: #e8eaf6; color: #3f51b5; }
+        .indicator-p { background: #f3e5f5; color: #8e24aa; }
+        .indicator-f { background: #e0f2f1; color: #00796b; }
+        .indicator-w { background: #fff3e0; color: #f57c00; }
+        .indicator-b { background: #e8f5e9; color: #388e3c; }
+        .indicator-t { background: #fff8e1; color: #ff8f00; }
+        .indicator-l { background: #fce4ec; color: #c2185b; }
+        .indicator-dg { background: #e1f5fe; color: #0277bd; }
+        .indicator-rd { background: #f1f8e9; color: #689f38; }
+        .indicator-d { background: #fffde7; color: #f9a825; }
+    </style>
 </head>
 <body>
-    <!-- Normal ERP Interface (Default View) -->
-    <div class="erp-interface" id="normalInterface">
-        <!-- Header -->
-        <header class="erp-header">
-            <div class="logo">
-                <i class="fas fa-cube"></i>
-                <h1>ERP System</h1>
+    <!-- FLOATING ACTIONS -->
+    <div class="float-actions">
+        <button class="action-btn" style="background: linear-gradient(135deg, #4CAF50, #2E7D32);" 
+                onclick="showDashboard()" title="Dashboard">
+            <i class="fas fa-home"></i>
+        </button>
+        <button class="action-btn" style="background: linear-gradient(135deg, #2196F3, #0D47A1);" 
+                onclick="showProforma()" title="Proforma">
+            <i class="fas fa-file-invoice-dollar"></i>
+        </button>
+        <button class="action-btn" style="background: linear-gradient(135deg, #FF9800, #E65100);" 
+                onclick="printCurrent()" title="Print">
+            <i class="fas fa-print"></i>
+        </button>
+    </div>
+
+    <!-- HEADER WITH NAVIGATION MENU -->
+    <header class="header-nav">
+        <div class="header-top">
+            <div class="company-name">
+                <i class="fas fa-industry"></i>
+                S.A.P.U.T. Glass Works Enterprise - Complete ERP System
             </div>
             <div class="user-info">
-                <span>Welcome, Admin</span>
-                <button class="logout-btn">Logout</button>
+                <span><i class="fas fa-user-circle"></i> Admin User</span>
+                <button class="btn btn-sm btn-outline-light" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
             </div>
-        </header>
-
-        <!-- Navigation -->
-        <nav class="erp-nav">
-            <button class="nav-btn active">
-                <i class="fas fa-home"></i> Dashboard
-            </button>
-            <button class="nav-btn">
-                <i class="fas fa-users"></i> CRM
-            </button>
-            <button class="nav-btn">
-                <i class="fas fa-box"></i> Inventory
-            </button>
-            <button class="nav-btn" id="openPIMode">
-                <i class="fas fa-file-excel"></i> Create PI
-            </button>
-            <button class="nav-btn">
-                <i class="fas fa-chart-bar"></i> Reports
-            </button>
-        </nav>
-
-        <!-- Main Content -->
-        <main class="erp-main">
-            <div class="dashboard">
-                <h2>Dashboard</h2>
-                <p>Normal ERP interface. Click "Create PI" to open Excel grid mode.</p>
+        </div>
+        
+        <nav class="main-nav">
+            <div class="nav-container">
+                <!-- MAIN MODULES -->
+                <div class="nav-item">
+                    <a href="#" class="nav-link-custom active" onclick="showDashboard()">
+                        <i class="fas fa-home"></i> Dashboard
+                    </a>
+                </div>
                 
-                <div class="actions">
-                    <button class="action-btn">
-                        <i class="fas fa-plus"></i> Add Product
-                    </button>
-                    <button class="action-btn">
-                        <i class="fas fa-file-invoice"></i> Create Invoice
-                    </button>
-                    <button class="action-btn" id="openPIMode2">
-                        <i class="fas fa-table"></i> Open PI Grid
-                    </button>
+                <!-- SALES & INVOICING -->
+                <div class="nav-item">
+                    <a href="#" class="nav-link-custom" onclick="showProforma()">
+                        <i class="fas fa-file-invoice-dollar"></i> Proforma
+                    </a>
+                </div>
+                
+                <div class="nav-item">
+                    <a href="#" class="nav-link-custom" onclick="showQuotation()">
+                        <i class="fas fa-file-alt"></i> Quotation
+                    </a>
+                </div>
+                
+                <div class="nav-item">
+                    <a href="#" class="nav-link-custom" onclick="showGSTInvoice()">
+                        <i class="fas fa-file-invoice"></i> GST Invoice
+                    </a>
+                </div>
+                
+                <!-- ORDER MANAGEMENT -->
+                <div class="nav-item">
+                    <a href="#" class="nav-link-custom" onclick="showOrderManagement()">
+                        <i class="fas fa-clipboard-list"></i> Orders
+                    </a>
+                </div>
+                
+                <!-- CUSTOMER MANAGEMENT -->
+                <div class="nav-item">
+                    <a href="#" class="nav-link-custom" onclick="showCustomerManagement()">
+                        <i class="fas fa-users"></i> Customers
+                    </a>
+                </div>
+                
+                <!-- INVENTORY -->
+                <div class="nav-item">
+                    <a href="#" class="nav-link-custom" onclick="showItemMaster()">
+                        <i class="fas fa-box"></i> Item Master
+                    </a>
+                </div>
+                
+                <!-- GLASS OPERATIONS -->
+                <div class="nav-item">
+                    <a href="#" class="nav-link-custom" onclick="showGlassLines()">
+                        <i class="fas fa-th-large"></i> Glass Lines
+                    </a>
+                </div>
+                
+                <div class="nav-item">
+                    <a href="#" class="nav-link-custom" onclick="showOptimization()">
+                        <i class="fas fa-cube"></i> Optimization
+                    </a>
+                </div>
+                
+                <!-- DISPATCH -->
+                <div class="nav-item">
+                    <a href="#" class="nav-link-custom" onclick="showDispatchPlanner()">
+                        <i class="fas fa-truck-loading"></i> Dispatch
+                    </a>
+                </div>
+                
+                <!-- ACCOUNTING -->
+                <div class="nav-item">
+                    <a href="#" class="nav-link-custom" onclick="showAccounting()">
+                        <i class="fas fa-calculator"></i> Accounting
+                    </a>
+                </div>
+                
+                <!-- REPORTS -->
+                <div class="nav-item">
+                    <a href="#" class="nav-link-custom" onclick="showReports()">
+                        <i class="fas fa-chart-bar"></i> Reports
+                    </a>
+                </div>
+                
+                <!-- ADMINISTRATION -->
+                <div class="nav-item">
+                    <div class="nav-link-custom">
+                        <i class="fas fa-cog"></i> Admin
+                    </div>
+                    <div class="nav-dropdown">
+                        <a href="#" class="dropdown-item" onclick="showUserManagement()">
+                            <i class="fas fa-user-cog"></i> User Management
+                        </a>
+                        <a href="#" class="dropdown-item" onclick="showAdminPanel()">
+                            <i class="fas fa-shield-alt"></i> Admin Panel
+                        </a>
+                        <a href="#" class="dropdown-item" onclick="showSettings()">
+                            <i class="fas fa-cogs"></i> Settings
+                        </a>
+                        <a href="#" class="dropdown-item" onclick="showCustomCharges()">
+                            <i class="fas fa-coins"></i> Custom Charges
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item" onclick="showAttendance()">
+                            <i class="fas fa-calendar-check"></i> Attendance
+                        </a>
+                    </div>
                 </div>
             </div>
-        </main>
-    </div>
+        </nav>
+    </header>
 
-    <!-- Excel Grid Interface (Hidden by default) -->
-    <div class="excel-modal" id="excelModal">
-        <div class="modal-header">
-            <h2>
-                <i class="fas fa-file-excel"></i>
-                Product Information (PI) Creator
-            </h2>
-            <button class="close-modal" id="closeExcel">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-
-        <!-- Grid Size Configuration -->
-        <div class="grid-config">
-            <div class="config-row">
-                <div class="config-item">
-                    <label>Rows:</label>
-                    <input type="number" id="rowCount" min="1" max="50" value="10">
-                </div>
-                <div class="config-item">
-                    <label>Columns:</label>
-                    <input type="number" id="colCount" min="1" max="26" value="8">
-                </div>
-                <button class="generate-btn" id="generateGrid">
-                    <i class="fas fa-sync-alt"></i> Generate Grid
-                </button>
-                <button class="save-btn" id="saveData">
-                    <i class="fas fa-save"></i> Save PI
-                </button>
+    <!-- MAIN CONTENT AREA -->
+    <main class="container">
+        <!-- DASHBOARD SECTION (Default Visible) -->
+        <section id="dashboardSection" class="module-section">
+            <div class="dashboard-welcome">
+                <h2>Welcome to Glass Works ERP</h2>
+                <p class="mb-0">Complete solution for glass manufacturing business management</p>
             </div>
-        </div>
+            
+            <div class="quick-stats">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #e3f2fd; color: #2196f3;">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                    <h5>₹ 2,45,800</h5>
+                    <p class="text-muted mb-0">Today's Sales</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #f3e5f5; color: #9c27b0;">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <h5>18</h5>
+                    <p class="text-muted mb-0">Pending Orders</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #e8f5e9; color: #4caf50;">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h5>156</h5>
+                    <p class="text-muted mb-0">Active Customers</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #fff3e0; color: #ff9800;">
+                        <i class="fas fa-truck-loading"></i>
+                    </div>
+                    <h5>7</h5>
+                    <p class="text-muted mb-0">Today's Dispatch</p>
+                </div>
+            </div>
+            
+            <div class="recent-activity">
+                <h5 class="mb-4">Recent Activities</h5>
+                <div class="activity-item">
+                    <div class="rounded-circle bg-primary text-white p-2">
+                        <i class="fas fa-file-invoice"></i>
+                    </div>
+                    <div>
+                        <strong>PI-0234</strong> created for ABC Traders
+                        <div class="text-muted">10 minutes ago</div>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="rounded-circle bg-success text-white p-2">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div>
+                        Order <strong>ORD-567</strong> completed
+                        <div class="text-muted">1 hour ago</div>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="rounded-circle bg-warning text-white p-2">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div>
+                        Low stock alert: Clear Glass 6mm
+                        <div class="text-muted">2 hours ago</div>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="rounded-circle bg-info text-white p-2">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <div>
+                        Dispatch scheduled for Order ORD-556
+                        <div class="text-muted">3 hours ago</div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <!-- Excel Grid Container -->
-        <div class="excel-container" id="excelContainer">
-            <!-- Grid will be generated here -->
-        </div>
+        <!-- PROFORMA SECTION (Hidden by default) -->
+        <section id="proformaSection" class="module-section">
+            <div class="section-header">
+                <h4><i class="fas fa-file-invoice-dollar me-2"></i>Proforma Invoice</h4>
+                <p class="text-muted mb-0">Create and manage proforma invoices</p>
+            </div>
+            
+            <!-- PROFORMA CONTENT WILL GO HERE -->
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i> Proforma invoice section content will be loaded here.
+            </div>
+        </section>
 
-        <!-- Status Bar -->
-        <div class="excel-status">
-            <span>Ready</span>
-            <span id="cellCount">Cells: 0</span>
-            <span>Press F2 to edit cells</span>
-        </div>
-    </div>
+        <!-- OTHER SECTIONS (Add similar structure for each module) -->
+        <section id="quotationSection" class="module-section">
+            <div class="section-header">
+                <h4><i class="fas fa-file-alt me-2"></i>Quotation Management</h4>
+                <p class="text-muted mb-0">Create and manage quotations</p>
+            </div>
+        </section>
+        
+        <!-- Add similar sections for other modules -->
+        <!-- Order Management, Customer Management, etc. -->
+        
+    </main>
 
-    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Initialize - Show dashboard by default
+        document.addEventListener('DOMContentLoaded', function() {
+            showDashboard();
+        });
+        
+        // Function to show a specific module
+        function showModule(moduleId) {
+            // Hide all modules
+            document.querySelectorAll('.module-section').forEach(module => {
+                module.style.display = 'none';
+            });
+            
+            // Show selected module
+            document.getElementById(moduleId).style.display = 'block';
+            
+            // Update active menu item
+            document.querySelectorAll('.nav-link-custom').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Update floating buttons title
+            document.getElementById('currentModule').textContent = 
+                document.querySelector('#' + moduleId + ' h4').textContent;
+        }
+        
+        // Module navigation functions
+        function showDashboard() {
+            showModule('dashboardSection');
+            document.querySelector('.nav-link-custom[onclick="showDashboard()"]').classList.add('active');
+        }
+        
+        function showProforma() {
+            showModule('proformaSection');
+            document.querySelector('.nav-link-custom[onclick="showProforma()"]').classList.add('active');
+        }
+        
+        function showQuotation() {
+            showModule('quotationSection');
+            document.querySelector('.nav-link-custom[onclick="showQuotation()"]').classList.add('active');
+        }
+        
+        function showGSTInvoice() {
+            alert('GST Invoice module will be loaded here');
+            showDashboard(); // Return to dashboard for now
+        }
+        
+        function showOrderManagement() {
+            alert('Order Management module will be loaded here');
+            showDashboard();
+        }
+        
+        function showCustomerManagement() {
+            alert('Customer Management module will be loaded here');
+            showDashboard();
+        }
+        
+        function showItemMaster() {
+            alert('Item Master module will be loaded here');
+            showDashboard();
+        }
+        
+        function showGlassLines() {
+            alert('Glass Lines module will be loaded here');
+            showDashboard();
+        }
+        
+        function showOptimization() {
+            alert('Optimization module will be loaded here');
+            showDashboard();
+        }
+        
+        function showDispatchPlanner() {
+            alert('Dispatch Planner module will be loaded here');
+            showDashboard();
+        }
+        
+        function showAccounting() {
+            alert('Accounting module will be loaded here');
+            showDashboard();
+        }
+        
+        function showReports() {
+            alert('Reports module will be loaded here');
+            showDashboard();
+        }
+        
+        function showUserManagement() {
+            alert('User Management module will be loaded here');
+            showDashboard();
+        }
+        
+        function showAdminPanel() {
+            alert('Admin Panel module will be loaded here');
+            showDashboard();
+        }
+        
+        function showSettings() {
+            alert('Settings module will be loaded here');
+            showDashboard();
+        }
+        
+        function showCustomCharges() {
+            alert('Custom Charges module will be loaded here');
+            showDashboard();
+        }
+        
+        function showAttendance() {
+            alert('Attendance module will be loaded here');
+            showDashboard();
+        }
+        
+        function logout() {
+            if(confirm('Are you sure you want to logout?')) {
+                alert('Logged out successfully');
+                showDashboard();
+            }
+        }
+        
+        function printCurrent() {
+            window.print();
+        }
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if(e.ctrlKey && e.key === 'Home') {
+                e.preventDefault();
+                showDashboard();
+            }
+            if(e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                showProforma();
+            }
+            if(e.ctrlKey && e.shiftKey && e.key === 'P') {
+                e.preventDefault();
+                printCurrent();
+            }
+        });
+    </script>
 </body>
 </html>

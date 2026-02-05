@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JP Enterprise</title>
+    <title>JP</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -48,12 +48,11 @@
         }
         
         .jp-logo-splash {
-            font-size: 120px;
+            font-size: 140px;
             font-weight: 900;
             color: white;
-            letter-spacing: 15px;
-            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            margin-bottom: 20px;
+            letter-spacing: 20px;
+            text-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
             animation: pulse 2s infinite;
         }
         
@@ -64,10 +63,10 @@
         }
         
         .powered-by {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 18px;
-            letter-spacing: 5px;
-            margin-top: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 20px;
+            letter-spacing: 8px;
+            margin-top: 30px;
             font-weight: 300;
             animation: fadeInUp 1s ease-out 1s both;
         }
@@ -100,18 +99,17 @@
         .login-container {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.2);
             width: 400px;
-            padding: 40px;
+            padding: 50px;
             text-align: center;
-            transform: translateY(0);
             animation: slideUp 0.6s ease-out;
         }
         
         @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(40px);
             }
             to {
                 opacity: 1;
@@ -120,54 +118,50 @@
         }
         
         .jp-logo-login {
-            font-size: 60px;
+            font-size: 80px;
             font-weight: 900;
             color: var(--jp-blue);
-            letter-spacing: 10px;
-            margin-bottom: 30px;
-            text-shadow: 0 4px 10px rgba(30, 64, 175, 0.2);
-        }
-        
-        .login-title {
-            color: #1e293b;
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 30px;
+            letter-spacing: 15px;
+            margin-bottom: 40px;
+            text-shadow: 0 8px 20px rgba(30, 64, 175, 0.2);
         }
         
         .login-input {
             width: 100%;
-            padding: 12px 20px;
+            padding: 15px 25px;
             border: 2px solid #e2e8f0;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 16px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             transition: all 0.3s;
+            background: #f8fafc;
         }
         
         .login-input:focus {
             outline: none;
             border-color: var(--jp-light);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
         }
         
         .login-btn {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             background: linear-gradient(135deg, var(--jp-blue), var(--jp-light));
             color: white;
             border: none;
-            border-radius: 10px;
-            font-size: 16px;
+            border-radius: 12px;
+            font-size: 18px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-            margin-top: 10px;
+            margin-top: 15px;
+            letter-spacing: 2px;
         }
         
         .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(30, 64, 175, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(30, 64, 175, 0.3);
         }
         
         /* MAIN APPLICATION */
@@ -175,40 +169,50 @@
             display: none;
         }
         
-        /* HEADER WITH JP LOGO */
+        /* HEADER - ONLY JP LOGO */
         .header-bar {
             background: white;
             padding: 0;
-            border-bottom: 3px solid var(--jp-blue);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border-bottom: 4px solid var(--jp-blue);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
         }
         
         .logo-section {
             background: linear-gradient(135deg, var(--jp-dark), var(--jp-blue));
-            padding: 25px;
+            padding: 30px;
             text-align: center;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
-        .jp-logo-main {
-            font-size: 48px;
+        .jp-logo-header {
+            font-size: 60px;
             font-weight: 900;
             color: white;
-            letter-spacing: 8px;
-            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            letter-spacing: 12px;
+            text-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
         
-        /* MAIN NAVIGATION */
+        /* MAIN NAVIGATION - CLEAN */
         .main-nav-container {
             background: white;
-            padding: 0 20px;
-            border-bottom: 1px solid #e2e8f0;
+            padding: 0;
         }
         
         .nav-scroll {
             display: flex;
             overflow-x: auto;
-            padding: 8px 0;
-            scrollbar-width: thin;
+            padding: 0;
+            scrollbar-width: none;
+            background: linear-gradient(to right, #f8fafc, #ffffff);
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .nav-scroll::-webkit-scrollbar {
+            display: none;
         }
         
         .nav-main-item {
@@ -217,34 +221,31 @@
         }
         
         .nav-main-btn {
-            background: white;
-            border: 1px solid #e2e8f0;
-            color: #4a5568;
-            padding: 12px 24px;
-            font-size: 13px;
+            background: transparent;
+            border: none;
+            color: #475569;
+            padding: 18px 28px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
             display: flex;
             align-items: center;
-            gap: 10px;
-            border-radius: 8px;
-            margin: 0 4px;
+            gap: 12px;
             text-decoration: none;
+            border-bottom: 3px solid transparent;
         }
         
         .nav-main-btn:hover {
-            background: #f1f5f9;
             color: var(--jp-blue);
-            border-color: var(--jp-light);
-            transform: translateY(-1px);
+            background: #f1f5f9;
+            border-bottom: 3px solid var(--jp-light);
         }
         
         .nav-main-btn.active {
-            background: linear-gradient(135deg, var(--jp-light), var(--jp-blue));
-            color: white;
-            border-color: var(--jp-blue);
-            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.2);
+            color: var(--jp-blue);
+            background: #f1f5f9;
+            border-bottom: 3px solid var(--jp-blue);
         }
         
         /* MEGA MENU */
@@ -253,13 +254,13 @@
             top: 100%;
             left: 0;
             background: white;
-            min-width: 600px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-            border-radius: 12px;
+            min-width: 650px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            border-radius: 15px;
             border: 1px solid #e2e8f0;
             z-index: 1000;
             display: none;
-            padding: 25px;
+            padding: 30px;
         }
         
         .nav-main-item:hover .mega-menu {
@@ -269,33 +270,33 @@
         .mega-menu-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            gap: 25px;
         }
         
         .mega-category-title {
             color: var(--jp-blue);
             font-weight: 700;
-            font-size: 13px;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
             border-bottom: 2px solid #e2e8f0;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
         
         .mega-menu-item {
             display: block;
-            color: #4a5568;
-            padding: 10px 14px;
-            border-radius: 6px;
-            font-size: 12px;
-            margin-bottom: 5px;
+            color: #475569;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 6px;
             text-decoration: none;
             transition: all 0.2s;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
         
         .mega-menu-item:hover {
@@ -306,93 +307,48 @@
         
         /* USER BAR */
         .user-bar {
-            background: #f8fafc;
-            padding: 12px 25px;
-            border-top: 1px solid #e2e8f0;
+            background: white;
+            padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-top: 1px solid #e2e8f0;
         }
         
         .user-info {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
         }
         
-        /* CLEAN DASHBOARD */
-        .dashboard-texture {
-            min-height: 75vh;
+        /* DASHBOARD - ONLY JP LOGO */
+        .dashboard-container {
+            min-height: calc(100vh - 220px);
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             background: 
-                linear-gradient(45deg, transparent 49%, rgba(59, 130, 246, 0.03) 50%, rgba(59, 130, 246, 0.03) 50%, transparent 51%),
-                linear-gradient(-45deg, transparent 49%, rgba(59, 130, 246, 0.03) 50%, rgba(59, 130, 246, 0.03) 50%, transparent 51%);
-            background-size: 80px 80px;
+                linear-gradient(45deg, transparent 49%, rgba(59, 130, 246, 0.02) 50%, rgba(59, 130, 246, 0.02) 50%, transparent 51%),
+                linear-gradient(-45deg, transparent 49%, rgba(59, 130, 246, 0.02) 50%, rgba(59, 130, 246, 0.02) 50%, transparent 51%);
+            background-size: 100px 100px;
             background-color: white;
         }
         
         .jp-logo-dashboard {
-            font-size: 100px;
+            font-size: 180px;
             font-weight: 900;
             color: var(--jp-blue);
-            letter-spacing: 12px;
-            text-shadow: 0 10px 30px rgba(30, 64, 175, 0.15);
-            margin-bottom: 30px;
-        }
-        
-        .welcome-text {
-            color: #64748b;
-            font-size: 20px;
-            font-weight: 300;
-            letter-spacing: 3px;
-            margin-bottom: 50px;
-        }
-        
-        .quick-stats {
-            display: flex;
-            gap: 40px;
-            margin-top: 40px;
-        }
-        
-        .stat-circle {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-            border: 3px solid #e2e8f0;
-            transition: all 0.3s;
-        }
-        
-        .stat-circle:hover {
-            transform: translateY(-5px);
-            border-color: var(--jp-light);
-            box-shadow: 0 20px 40px rgba(30, 64, 175, 0.15);
-        }
-        
-        .stat-value {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--jp-blue);
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #64748b;
-            margin-top: 8px;
+            letter-spacing: 25px;
+            text-shadow: 0 20px 50px rgba(30, 64, 175, 0.15);
+            opacity: 0.9;
         }
         
         /* CONTENT AREAS */
         .content-area {
-            padding: 30px;
+            padding: 40px;
             display: none;
+            min-height: calc(100vh - 220px);
+            background: white;
         }
         
         .content-area.active {
@@ -403,8 +359,8 @@
         /* FLOATING BUTTONS */
         .float-actions {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            bottom: 40px;
+            right: 40px;
             display: flex;
             flex-direction: column;
             gap: 15px;
@@ -412,15 +368,15 @@
         }
         
         .action-btn {
-            width: 60px;
-            height: 60px;
+            width: 65px;
+            height: 65px;
             border-radius: 50%;
             border: none;
             background: linear-gradient(135deg, var(--jp-blue), var(--jp-light));
             color: white;
-            font-size: 22px;
+            font-size: 24px;
             cursor: pointer;
-            box-shadow: 0 8px 25px rgba(30, 64, 175, 0.3);
+            box-shadow: 0 10px 30px rgba(30, 64, 175, 0.3);
             transition: all 0.3s;
             display: flex;
             align-items: center;
@@ -428,25 +384,60 @@
         }
         
         .action-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 12px 30px rgba(30, 64, 175, 0.4);
+            transform: scale(1.15);
+            box-shadow: 0 15px 40px rgba(30, 64, 175, 0.4);
         }
         
         /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .jp-logo-splash {
+                font-size: 100px;
+                letter-spacing: 15px;
+            }
+            
+            .jp-logo-dashboard {
+                font-size: 120px;
+                letter-spacing: 20px;
+            }
+            
+            .jp-logo-header {
+                font-size: 50px;
+                letter-spacing: 10px;
+            }
+            
+            .mega-menu {
+                min-width: 500px;
+            }
+            
+            .mega-menu-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
         @media (max-width: 768px) {
             .jp-logo-splash {
-                font-size: 80px;
+                font-size: 70px;
                 letter-spacing: 10px;
             }
             
             .jp-logo-dashboard {
-                font-size: 60px;
+                font-size: 80px;
+                letter-spacing: 15px;
+            }
+            
+            .jp-logo-header {
+                font-size: 40px;
                 letter-spacing: 8px;
             }
             
             .login-container {
                 width: 90%;
-                padding: 30px;
+                padding: 40px 30px;
+            }
+            
+            .jp-logo-login {
+                font-size: 60px;
+                letter-spacing: 10px;
             }
             
             .mega-menu {
@@ -455,15 +446,44 @@
                 left: 20px;
                 right: 20px;
                 min-width: auto;
+                max-height: 70vh;
+                overflow-y: auto;
             }
             
             .mega-menu-grid {
                 grid-template-columns: 1fr;
             }
             
-            .quick-stats {
-                flex-direction: column;
-                gap: 20px;
+            .nav-main-btn {
+                padding: 15px 20px;
+                font-size: 13px;
+            }
+            
+            .action-btn {
+                width: 55px;
+                height: 55px;
+                font-size: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .jp-logo-dashboard {
+                font-size: 60px;
+                letter-spacing: 10px;
+            }
+            
+            .jp-logo-header {
+                font-size: 35px;
+                letter-spacing: 6px;
+            }
+            
+            .nav-main-btn {
+                padding: 12px 15px;
+                font-size: 12px;
+            }
+            
+            .nav-main-btn i {
+                display: none;
             }
         }
     </style>
@@ -479,13 +499,12 @@
     <div id="loginScreen">
         <div class="login-container">
             <div class="jp-logo-login">JP</div>
-            <div class="login-title">Enterprise Login</div>
             
             <form id="loginForm">
                 <input type="text" class="login-input" placeholder="Username" id="username" required>
                 <input type="password" class="login-input" placeholder="Password" id="password" required>
                 <button type="submit" class="login-btn">
-                    <i class="fas fa-sign-in-alt me-2"></i>Login
+                    <i class="fas fa-sign-in-alt me-2"></i>LOGIN
                 </button>
             </form>
             
@@ -511,10 +530,10 @@
             </button>
         </div>
 
-        <!-- HEADER -->
+        <!-- HEADER - ONLY JP LOGO -->
         <header class="header-bar">
             <div class="logo-section">
-                <div class="jp-logo-main">JP</div>
+                <div class="jp-logo-header">JP</div>
             </div>
             
             <!-- MAIN NAVIGATION -->
@@ -537,6 +556,12 @@
                                     <a href="#" class="mega-menu-item" onclick="showSubModule('price-master')">
                                         Price Master
                                     </a>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('process-master')">
+                                        Process Master
+                                    </a>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('cutting-rule')">
+                                        Cutting Rule
+                                    </a>
                                     <a href="#" class="mega-menu-item" onclick="showSubModule('glass-size')">
                                         Glass Size Master
                                     </a>
@@ -549,8 +574,14 @@
                                     <div class="mega-category-title">
                                         <i class="fas fa-cog"></i> System Masters
                                     </div>
-                                    <a href="#" class="mega-menu-item" onclick="showSubModule('customer-master')">
-                                        Customer Master
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('route-master')">
+                                        Route Master
+                                    </a>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('payment-terms')">
+                                        Payment Terms Master
+                                    </a>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('film-type')">
+                                        Film Type Master
                                     </a>
                                     <a href="#" class="mega-menu-item" onclick="showSubModule('bank-master')">
                                         Bank Master
@@ -558,8 +589,11 @@
                                     <a href="#" class="mega-menu-item" onclick="showSubModule('vehicle-master')">
                                         Vehicle Master
                                     </a>
-                                    <a href="#" class="mega-menu-item" onclick="showSubModule('charges-master')">
-                                        Charges Master
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('additional-charges')">
+                                        Additional Charges Master
+                                    </a>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('remarks-master')">
+                                        Remarks Master
                                     </a>
                                 </div>
                             </div>
@@ -572,19 +606,39 @@
                             <i class="fas fa-exchange-alt"></i> Transactions
                         </a>
                         <div class="mega-menu">
-                            <div class="mega-category">
-                                <div class="mega-category-title">
-                                    <i class="fas fa-file-invoice-dollar"></i> Sales
+                            <div class="mega-menu-grid">
+                                <div class="mega-category">
+                                    <div class="mega-category-title">
+                                        <i class="fas fa-file-invoice-dollar"></i> Sales Transactions
+                                    </div>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('proforma')">
+                                        Proforma Invoice
+                                    </a>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('work-order')">
+                                        Work Order
+                                    </a>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('sales-invoice')">
+                                        Sales Invoice
+                                    </a>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('direct-invoice')">
+                                        Direct Invoice
+                                    </a>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('credit-note')">
+                                        Credit Note
+                                    </a>
                                 </div>
-                                <a href="#" class="mega-menu-item" onclick="showSubModule('proforma')">
-                                    Proforma Invoice
-                                </a>
-                                <a href="#" class="mega-menu-item" onclick="showSubModule('work-order')">
-                                    Work Order
-                                </a>
-                                <a href="#" class="mega-menu-item" onclick="showSubModule('sales-invoice')">
-                                    Sales Invoice
-                                </a>
+                                
+                                <div class="mega-category">
+                                    <div class="mega-category-title">
+                                        <i class="fas fa-cut"></i> Production
+                                    </div>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('cutting-optimizer')">
+                                        Cutting Optimizer
+                                    </a>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('label-generation')">
+                                        Label / Sticker Generation
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -597,14 +651,63 @@
                         <div class="mega-menu">
                             <div class="mega-category">
                                 <div class="mega-category-title">
-                                    <i class="fas fa-boxes"></i> Stock
+                                    <i class="fas fa-boxes"></i> Stock Management
                                 </div>
-                                <a href="#" class="mega-menu-item" onclick="showSubModule('glass-inventory')">
-                                    Glass Inventory
-                                </a>
                                 <a href="#" class="mega-menu-item" onclick="showSubModule('hardware-inventory')">
                                     Hardware Inventory
                                 </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('glass-inventory')">
+                                    Glass Inventory
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- ⚙️ SYSTEM SETTINGS -->
+                    <div class="nav-main-item">
+                        <a href="#" class="nav-main-btn" onclick="showModule('system-settings')">
+                            <i class="fas fa-sliders-h"></i> System Settings
+                        </a>
+                        <div class="mega-menu">
+                            <div class="mega-menu-grid">
+                                <div class="mega-category">
+                                    <div class="mega-category-title">
+                                        <i class="fas fa-tools"></i> Configuration
+                                    </div>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('default-config')">
+                                        Default Configuration
+                                    </a>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('file-storage')">
+                                        File Storage Config
+                                    </a>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('network-config')">
+                                        Network Configuration
+                                    </a>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('data-backup')">
+                                        Data Backup & Restore
+                                    </a>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('sms-email')">
+                                        SMS / Email Config
+                                    </a>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('billing-config')">
+                                        Billing Configuration
+                                    </a>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('print-config')">
+                                        Print Configuration
+                                    </a>
+                                </div>
+                                
+                                <div class="mega-category">
+                                    <div class="mega-category-title">
+                                        <i class="fas fa-user-shield"></i> Security & Updates
+                                    </div>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('user-access')">
+                                        User Access Control
+                                    </a>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('software-update')">
+                                        Software Update
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -614,6 +717,39 @@
                         <a href="#" class="nav-main-btn" onclick="showModule('customer')">
                             <i class="fas fa-users"></i> Customers
                         </a>
+                        <div class="mega-menu">
+                            <div class="mega-category">
+                                <div class="mega-category-title">
+                                    <i class="fas fa-address-card"></i> Customer Management
+                                </div>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('customer-registration')">
+                                    Customer Registration
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('customer-list')">
+                                    Customer List / Master
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 🧑‍💼 SALES -->
+                    <div class="nav-main-item">
+                        <a href="#" class="nav-main-btn" onclick="showModule('sales')">
+                            <i class="fas fa-user-tie"></i> Sales
+                        </a>
+                        <div class="mega-menu">
+                            <div class="mega-category">
+                                <div class="mega-category-title">
+                                    <i class="fas fa-chart-line"></i> Sales Team
+                                </div>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('salesperson-registration')">
+                                    Salesperson Registration
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('salesperson-list')">
+                                    Salesperson List
+                                </a>
+                            </div>
+                        </div>
                     </div>
                     
                     <!-- 📊 REPORTS -->
@@ -625,7 +761,7 @@
                             <div class="mega-menu-grid">
                                 <div class="mega-category">
                                     <div class="mega-category-title">
-                                        Sales Reports
+                                        <i class="fas fa-file-invoice"></i> Sales Reports
                                     </div>
                                     <a href="#" class="mega-menu-item" onclick="showSubModule('proforma-report')">
                                         Proforma Report
@@ -633,37 +769,60 @@
                                     <a href="#" class="mega-menu-item" onclick="showSubModule('invoice-report')">
                                         Invoice Report
                                     </a>
-                                    <a href="#" class="mega-menu-item" onclick="showSubModule('sales-report')">
-                                        Sales Report
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('salesperson-performance')">
+                                        Salesperson Performance
+                                    </a>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('direct-invoice-report')">
+                                        Direct Invoice Report
+                                    </a>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('credit-note-report')">
+                                        Credit Note Report
+                                    </a>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('pending-billing')">
+                                        Pending Billing Report
+                                    </a>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('billed-area')">
+                                        Billed Area Report
                                     </a>
                                 </div>
                                 
                                 <div class="mega-category">
                                     <div class="mega-category-title">
-                                        Production Reports
+                                        <i class="fas fa-industry"></i> Production Reports
                                     </div>
                                     <a href="#" class="mega-menu-item" onclick="showSubModule('production-report')">
                                         Production Report
                                     </a>
-                                    <a href="#" class="mega-menu-item" onclick="showSubModule('inventory-report')">
-                                        Inventory Report
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('work-order-report')">
+                                        Work Order Report
+                                    </a>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('glass-inventory-report')">
+                                        Glass Inventory Report
+                                    </a>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('breakage-report')">
+                                        Breakage Report
+                                    </a>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('rejection-report')">
+                                        Rejection Report
+                                    </a>
+                                </div>
+                                
+                                <div class="mega-category">
+                                    <div class="mega-category-title">
+                                        <i class="fas fa-database"></i> System Reports
+                                    </div>
+                                    <a href="#" class="mega-menu-item" onclick="showSubModule('tally-export')">
+                                        Tally Export Report
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- ⚙️ SETTINGS -->
+                    <!-- 👤 USER MANAGEMENT -->
                     <div class="nav-main-item">
-                        <a href="#" class="nav-main-btn" onclick="showModule('settings')">
-                            <i class="fas fa-cog"></i> Settings
-                        </a>
-                    </div>
-                    
-                    <!-- 👤 USER -->
-                    <div class="nav-main-item">
-                        <a href="#" class="nav-main-btn" onclick="showModule('user')">
-                            <i class="fas fa-user-cog"></i> User
+                        <a href="#" class="nav-main-btn" onclick="showModule('user-management')">
+                            <i class="fas fa-user-cog"></i> User Management
                         </a>
                     </div>
                 </div>
@@ -677,7 +836,6 @@
                 </div>
                 <div class="user-info">
                     <span class="badge bg-primary">Administrator</span>
-                    <span><i class="fas fa-user-circle me-1"></i>Admin User</span>
                     <button class="btn btn-sm btn-outline-danger" onclick="logout()">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </button>
@@ -687,24 +845,9 @@
 
         <!-- MAIN CONTENT -->
         <main>
-            <!-- DASHBOARD -->
-            <section id="dashboard" class="dashboard-texture">
+            <!-- DASHBOARD - ONLY JP LOGO -->
+            <section id="dashboard" class="dashboard-container">
                 <div class="jp-logo-dashboard">JP</div>
-                <div class="welcome-text">Enterprise Management System</div>
-                <div class="quick-stats">
-                    <div class="stat-circle">
-                        <div class="stat-value">₹ 2.8L</div>
-                        <div class="stat-label">Today's Sales</div>
-                    </div>
-                    <div class="stat-circle">
-                        <div class="stat-value">48</div>
-                        <div class="stat-label">Active Orders</div>
-                    </div>
-                    <div class="stat-circle">
-                        <div class="stat-value">156</div>
-                        <div class="stat-label">Customers</div>
-                    </div>
-                </div>
             </section>
 
             <!-- MODULE CONTENT AREAS -->
@@ -729,10 +872,24 @@
                 </div>
             </section>
 
+            <section id="systemSettingsContent" class="content-area">
+                <div class="container">
+                    <h3 class="mb-4"><i class="fas fa-sliders-h me-2"></i>System Settings</h3>
+                    <p>System settings management section</p>
+                </div>
+            </section>
+
             <section id="customerContent" class="content-area">
                 <div class="container">
                     <h3 class="mb-4"><i class="fas fa-users me-2"></i>Customer Management</h3>
                     <p>Customer management section</p>
+                </div>
+            </section>
+
+            <section id="salesContent" class="content-area">
+                <div class="container">
+                    <h3 class="mb-4"><i class="fas fa-user-tie me-2"></i>Sales Management</h3>
+                    <p>Sales management section</p>
                 </div>
             </section>
 
@@ -743,14 +900,7 @@
                 </div>
             </section>
 
-            <section id="settingsContent" class="content-area">
-                <div class="container">
-                    <h3 class="mb-4"><i class="fas fa-cog me-2"></i>Settings</h3>
-                    <p>System settings section</p>
-                </div>
-            </section>
-
-            <section id="userContent" class="content-area">
+            <section id="userManagementContent" class="content-area">
                 <div class="container">
                     <h3 class="mb-4"><i class="fas fa-user-cog me-2"></i>User Management</h3>
                     <p>User management section</p>
@@ -765,7 +915,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Start with splash screen
             setTimeout(function() {
-                document.getElementById('splashScreen').style.animation = 'splashFade 1s ease-in-out forwards';
+                document.getElementById('splashScreen').style.animation = 'splashFade 3s ease-in-out forwards';
                 setTimeout(function() {
                     document.getElementById('loginScreen').style.display = 'flex';
                 }, 3000);
@@ -808,7 +958,8 @@
             });
             const timeStr = now.toLocaleTimeString('en-IN', {
                 hour: '2-digit',
-                minute: '2-digit'
+                minute: '2-digit',
+                second: '2-digit'
             });
             document.getElementById('currentDateTime').textContent = 
                 `${dateStr} | ${timeStr}`;

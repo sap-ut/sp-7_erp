@@ -3,51 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.A.P.U.T. Glass Works Enterprise - Complete ERP System</title>
+    <title>S.A.P.U.T. Glass Works ERP</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --success: #27ae60;
-            --warning: #f39c12;
-            --danger: #e74c3c;
-            --info: #17a2b8;
+            --primary: #1e3a5f;
+            --secondary: #2c5282;
+            --accent: #3182ce;
         }
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f7fa;
+            background: #f0f4f8;
             margin: 0;
             padding: 0;
             font-size: 13px;
         }
         
-        /* HEADER WITH NAVIGATION MENU */
-        .header-nav {
+        /* HEADER WITH LOGO */
+        .header-bar {
             background: white;
             padding: 0;
-            border-bottom: 1px solid #dee2e6;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border-bottom: 3px solid var(--primary);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
         }
         
-        .header-top {
-            background: linear-gradient(135deg, var(--primary), #1a2530);
+        .logo-section {
+            background: linear-gradient(135deg, var(--primary), #152a45);
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .company-logo {
+            font-size: 32px;
+            font-weight: 700;
             color: white;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .company-logo i {
+            font-size: 36px;
+            color: #4fd1c5;
+        }
+        
+        .company-tagline {
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+            margin-top: 5px;
+            font-weight: 300;
+        }
+        
+        /* MAIN NAVIGATION - MULTI-LEVEL */
+        .main-nav-container {
+            background: white;
+            padding: 0 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .nav-scroll {
+            display: flex;
+            overflow-x: auto;
+            padding: 5px 0;
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e0 transparent;
+        }
+        
+        .nav-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .nav-scroll::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        .nav-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e0;
+            border-radius: 3px;
+        }
+        
+        .nav-main-item {
+            position: relative;
+            white-space: nowrap;
+        }
+        
+        .nav-main-btn {
+            background: white;
+            border: 1px solid #e2e8f0;
+            color: #4a5568;
             padding: 10px 20px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-radius: 6px;
+            margin: 0 3px;
+            text-decoration: none;
+        }
+        
+        .nav-main-btn:hover {
+            background: #edf2f7;
+            color: var(--primary);
+            border-color: #cbd5e0;
+            transform: translateY(-1px);
+        }
+        
+        .nav-main-btn.active {
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            color: white;
+            border-color: var(--accent);
+            box-shadow: 0 2px 8px rgba(49, 130, 206, 0.3);
+        }
+        
+        /* MEGA MENU DROPDOWN */
+        .mega-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 600px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            z-index: 1000;
+            display: none;
+            padding: 25px;
+        }
+        
+        .nav-main-item:hover .mega-menu {
+            display: block;
+        }
+        
+        .mega-menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        .mega-category {
+            margin-bottom: 20px;
+        }
+        
+        .mega-category-title {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .mega-menu-item {
+            display: block;
+            color: #4a5568;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-bottom: 4px;
+            text-decoration: none;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .mega-menu-item:hover {
+            background: #f7fafc;
+            color: var(--accent);
+            transform: translateX(3px);
+        }
+        
+        .mega-menu-item i {
+            color: var(--accent);
+            font-size: 10px;
+        }
+        
+        /* USER INFO BAR */
+        .user-bar {
+            background: #f8fafc;
+            padding: 10px 20px;
+            border-top: 1px solid #e2e8f0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-        
-        .company-name {
-            font-size: 18px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
         
         .user-info {
@@ -56,176 +205,103 @@
             gap: 15px;
         }
         
-        /* MAIN NAVIGATION MENU */
-        .main-nav {
-            background: white;
-            padding: 5px 20px;
-            border-top: 1px solid #eee;
+        .user-info .badge {
+            background: linear-gradient(135deg, #38a169, #2f855a);
         }
         
-        .nav-container {
+        /* DASHBOARD - CLEAN WITH TEXTURE */
+        .dashboard-texture {
+            min-height: 70vh;
             display: flex;
-            flex-wrap: wrap;
-            gap: 2px;
-            align-items: center;
-        }
-        
-        .nav-item {
-            position: relative;
-        }
-        
-        .nav-link-custom {
-            color: #333;
-            padding: 10px 15px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            transition: all 0.2s;
-            border: 1px solid transparent;
-        }
-        
-        .nav-link-custom:hover {
-            background: #f8f9fa;
-            color: var(--secondary);
-            border-color: #dee2e6;
-        }
-        
-        .nav-link-custom.active {
-            background: linear-gradient(135deg, var(--secondary), #2980b9);
-            color: white;
-            box-shadow: 0 2px 5px rgba(52, 152, 219, 0.3);
-        }
-        
-        .nav-dropdown {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: white;
-            min-width: 200px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border-radius: 6px;
-            border: 1px solid #dee2e6;
-            z-index: 1000;
-            display: none;
-            padding: 5px 0;
-        }
-        
-        .nav-item:hover .nav-dropdown {
-            display: block;
-        }
-        
-        .dropdown-item {
-            padding: 8px 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #333;
-            text-decoration: none;
-            font-size: 12px;
-            transition: all 0.2s;
-        }
-        
-        .dropdown-item:hover {
-            background: #f8f9fa;
-            color: var(--secondary);
-        }
-        
-        .dropdown-divider {
-            height: 1px;
-            background: #dee2e6;
-            margin: 5px 0;
-        }
-        
-        /* CLEAN DASHBOARD */
-        .dashboard-welcome {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px 30px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
-        }
-        
-        .quick-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .stat-card {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            border-left: 4px solid var(--secondary);
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-            transition: transform 0.3s;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .stat-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 10px;
-            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
-            margin-bottom: 15px;
+            background: 
+                linear-gradient(45deg, transparent 49%, rgba(49, 130, 206, 0.03) 50%, rgba(49, 130, 206, 0.03) 50%, transparent 51%),
+                linear-gradient(-45deg, transparent 49%, rgba(49, 130, 206, 0.03) 50%, rgba(49, 130, 206, 0.03) 50%, transparent 51%);
+            background-size: 60px 60px;
+            background-color: #f7fafc;
         }
         
-        .recent-activity {
-            background: white;
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
-            margin-bottom: 30px;
+        .dashboard-logo {
+            font-size: 72px;
+            font-weight: 900;
+            color: var(--primary);
+            letter-spacing: 8px;
+            text-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
         }
         
-        .activity-item {
+        .dashboard-subtitle {
+            color: #4a5568;
+            font-size: 18px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+        
+        .dashboard-stats {
             display: flex;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .stat-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 15px;
-            padding: 12px 0;
-            border-bottom: 1px solid #f0f0f0;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 2px solid #e2e8f0;
         }
         
-        .activity-item:last-child {
-            border-bottom: none;
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
         }
         
-        /* MODULE SECTIONS */
-        .module-section {
+        .stat-label {
+            font-size: 11px;
+            color: #718096;
+            margin-top: 5px;
+        }
+        
+        /* MODULE CONTENT AREA */
+        .content-area {
+            padding: 30px;
             display: none;
+        }
+        
+        .content-area.active {
+            display: block;
             animation: fadeIn 0.3s;
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
-        .section-header {
+        .content-header {
             background: white;
-            padding: 15px 20px;
+            padding: 20px;
             border-radius: 8px;
-            margin-bottom: 20px;
-            border-left: 4px solid var(--secondary);
-            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 3px 15px rgba(0,0,0,0.05);
         }
         
-        /* FLOATING ACTIONS */
+        /* FLOATING BUTTONS */
         .float-actions {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 30px;
+            right: 30px;
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -233,437 +309,512 @@
         }
         
         .action-btn {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             border: none;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
             color: white;
-            font-size: 20px;
+            font-size: 22px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 6px 20px rgba(49, 130, 206, 0.4);
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .action-btn:hover {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 8px 25px rgba(49, 130, 206, 0.6);
         }
         
         /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .mega-menu {
+                min-width: 500px;
+            }
+            .mega-menu-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
         @media (max-width: 768px) {
-            .nav-container {
-                overflow-x: auto;
-                flex-wrap: nowrap;
-                padding-bottom: 5px;
+            .dashboard-logo {
+                font-size: 48px;
+                letter-spacing: 4px;
             }
-            
-            .company-name {
-                font-size: 14px;
+            .mega-menu {
+                position: fixed;
+                top: 160px;
+                left: 20px;
+                right: 20px;
+                min-width: auto;
             }
-            
-            .nav-link-custom {
-                font-size: 11px;
-                padding: 8px 12px;
+            .stat-circle {
+                width: 80px;
+                height: 80px;
             }
         }
-        
-        /* GLASS LINE INDICATORS */
-        .line-indicator {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 10px;
-            margin: 1px;
-        }
-        
-        .indicator-c { background: #e8eaf6; color: #3f51b5; }
-        .indicator-p { background: #f3e5f5; color: #8e24aa; }
-        .indicator-f { background: #e0f2f1; color: #00796b; }
-        .indicator-w { background: #fff3e0; color: #f57c00; }
-        .indicator-b { background: #e8f5e9; color: #388e3c; }
-        .indicator-t { background: #fff8e1; color: #ff8f00; }
-        .indicator-l { background: #fce4ec; color: #c2185b; }
-        .indicator-dg { background: #e1f5fe; color: #0277bd; }
-        .indicator-rd { background: #f1f8e9; color: #689f38; }
-        .indicator-d { background: #fffde7; color: #f9a825; }
     </style>
 </head>
 <body>
     <!-- FLOATING ACTIONS -->
     <div class="float-actions">
-        <button class="action-btn" style="background: linear-gradient(135deg, #4CAF50, #2E7D32);" 
-                onclick="showDashboard()" title="Dashboard">
+        <button class="action-btn" onclick="showDashboard()" title="Dashboard">
             <i class="fas fa-home"></i>
         </button>
-        <button class="action-btn" style="background: linear-gradient(135deg, #2196F3, #0D47A1);" 
-                onclick="showProforma()" title="Proforma">
+        <button class="action-btn" onclick="showModule('proforma')" title="Proforma">
             <i class="fas fa-file-invoice-dollar"></i>
         </button>
-        <button class="action-btn" style="background: linear-gradient(135deg, #FF9800, #E65100);" 
-                onclick="printCurrent()" title="Print">
+        <button class="action-btn" onclick="window.print()" title="Print">
             <i class="fas fa-print"></i>
         </button>
     </div>
 
-    <!-- HEADER WITH NAVIGATION MENU -->
-    <header class="header-nav">
-        <div class="header-top">
-            <div class="company-name">
-                <i class="fas fa-industry"></i>
-                S.A.P.U.T. Glass Works Enterprise - Complete ERP System
+    <!-- HEADER WITH LOGO -->
+    <header class="header-bar">
+        <div class="logo-section">
+            <div class="company-logo">
+                <i class="fas fa-glass-whiskey"></i>
+                S.A.P.U.T.
+            </div>
+            <div class="company-tagline">Glass Works Enterprise - Complete ERP Solution</div>
+        </div>
+        
+        <!-- MAIN NAVIGATION -->
+        <div class="main-nav-container">
+            <div class="nav-scroll">
+                <!-- 🧱 MASTERS -->
+                <div class="nav-main-item">
+                    <a href="#" class="nav-main-btn" onclick="showModule('masters')">
+                        <i class="fas fa-cubes"></i> Masters
+                    </a>
+                    <div class="mega-menu">
+                        <div class="mega-menu-grid">
+                            <div class="mega-category">
+                                <div class="mega-category-title">
+                                    <i class="fas fa-box"></i> Product Masters
+                                </div>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('item-master')">
+                                    <i class="fas fa-circle"></i> Item Master
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('price-master')">
+                                    <i class="fas fa-circle"></i> Price Master
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('process-master')">
+                                    <i class="fas-circle"></i> Process Master
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('cutting-rule')">
+                                    <i class="fas fa-circle"></i> Cutting Rule (Z Rule)
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('glass-size')">
+                                    <i class="fas fa-circle"></i> Glass Size Master
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('glass-type')">
+                                    <i class="fas fa-circle"></i> Glass Type Master
+                                </a>
+                            </div>
+                            
+                            <div class="mega-category">
+                                <div class="mega-category-title">
+                                    <i class="fas fa-cog"></i> System Masters
+                                </div>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('route-master')">
+                                    <i class="fas fa-circle"></i> Route Master
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('payment-terms')">
+                                    <i class="fas fa-circle"></i> Payment Terms Master
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('film-type')">
+                                    <i class="fas fa-circle"></i> Film Type Master
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('bank-master')">
+                                    <i class="fas fa-circle"></i> Bank Master
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('vehicle-master')">
+                                    <i class="fas fa-circle"></i> Vehicle Master
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('additional-charges')">
+                                    <i class="fas fa-circle"></i> Additional Charges Master
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('remarks-master')">
+                                    <i class="fas fa-circle"></i> Remarks Master
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 🔁 TRANSACTIONS -->
+                <div class="nav-main-item">
+                    <a href="#" class="nav-main-btn" onclick="showModule('transactions')">
+                        <i class="fas fa-exchange-alt"></i> Transactions
+                    </a>
+                    <div class="mega-menu">
+                        <div class="mega-menu-grid">
+                            <div class="mega-category">
+                                <div class="mega-category-title">
+                                    <i class="fas fa-file-invoice-dollar"></i> Sales Transactions
+                                </div>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('proforma')">
+                                    <i class="fas fa-circle"></i> Proforma Invoice
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('work-order')">
+                                    <i class="fas fa-circle"></i> Work Order
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('sales-invoice')">
+                                    <i class="fas fa-circle"></i> Sales Invoice
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('direct-invoice')">
+                                    <i class="fas fa-circle"></i> Direct Invoice
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('credit-note')">
+                                    <i class="fas fa-circle"></i> Credit Note
+                                </a>
+                            </div>
+                            
+                            <div class="mega-category">
+                                <div class="mega-category-title">
+                                    <i class="fas fa-cut"></i> Production
+                                </div>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('cutting-optimizer')">
+                                    <i class="fas fa-circle"></i> Cutting Optimizer
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('label-generation')">
+                                    <i class="fas fa-circle"></i> Label / Sticker Generation
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 📦 INVENTORY -->
+                <div class="nav-main-item">
+                    <a href="#" class="nav-main-btn" onclick="showModule('inventory')">
+                        <i class="fas fa-warehouse"></i> Inventory
+                    </a>
+                    <div class="mega-menu">
+                        <div class="mega-category">
+                            <div class="mega-category-title">
+                                <i class="fas fa-boxes"></i> Stock Management
+                            </div>
+                            <a href="#" class="mega-menu-item" onclick="showSubModule('hardware-inventory')">
+                                <i class="fas fa-circle"></i> Hardware Inventory
+                            </a>
+                            <a href="#" class="mega-menu-item" onclick="showSubModule('glass-inventory')">
+                                <i class="fas fa-circle"></i> Glass Inventory
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ⚙️ SYSTEM SETTINGS -->
+                <div class="nav-main-item">
+                    <a href="#" class="nav-main-btn" onclick="showModule('system-settings')">
+                        <i class="fas fa-sliders-h"></i> System Settings
+                    </a>
+                    <div class="mega-menu">
+                        <div class="mega-menu-grid">
+                            <div class="mega-category">
+                                <div class="mega-category-title">
+                                    <i class="fas fa-tools"></i> Configuration
+                                </div>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('default-config')">
+                                    <i class="fas fa-circle"></i> Default Configuration
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('file-storage')">
+                                    <i class="fas fa-circle"></i> File Storage Config
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('network-config')">
+                                    <i class="fas fa-circle"></i> Network Configuration
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('data-backup')">
+                                    <i class="fas fa-circle"></i> Data Backup & Restore
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('sms-email')">
+                                    <i class="fas fa-circle"></i> SMS / Email Config
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('billing-config')">
+                                    <i class="fas fa-circle"></i> Billing Configuration
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('print-config')">
+                                    <i class="fas fa-circle"></i> Print Configuration
+                                </a>
+                            </div>
+                            
+                            <div class="mega-category">
+                                <div class="mega-category-title">
+                                    <i class="fas fa-user-shield"></i> Security & Updates
+                                </div>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('user-access')">
+                                    <i class="fas fa-circle"></i> User Access Control
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('software-update')">
+                                    <i class="fas fa-circle"></i> Software Update
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 👥 CUSTOMER -->
+                <div class="nav-main-item">
+                    <a href="#" class="nav-main-btn" onclick="showModule('customer')">
+                        <i class="fas fa-users"></i> Customers
+                    </a>
+                    <div class="mega-menu">
+                        <div class="mega-category">
+                            <div class="mega-category-title">
+                                <i class="fas fa-address-card"></i> Customer Management
+                            </div>
+                            <a href="#" class="mega-menu-item" onclick="showSubModule('customer-registration')">
+                                <i class="fas fa-circle"></i> Customer Registration
+                            </a>
+                            <a href="#" class="mega-menu-item" onclick="showSubModule('customer-list')">
+                                <i class="fas fa-circle"></i> Customer List / Master
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 🧑‍💼 SALES -->
+                <div class="nav-main-item">
+                    <a href="#" class="nav-main-btn" onclick="showModule('sales')">
+                        <i class="fas fa-user-tie"></i> Sales
+                    </a>
+                    <div class="mega-menu">
+                        <div class="mega-category">
+                            <div class="mega-category-title">
+                                <i class="fas fa-chart-line"></i> Sales Team
+                            </div>
+                            <a href="#" class="mega-menu-item" onclick="showSubModule('salesperson-registration')">
+                                <i class="fas fa-circle"></i> Salesperson Registration
+                            </a>
+                            <a href="#" class="mega-menu-item" onclick="showSubModule('salesperson-list')">
+                                <i class="fas fa-circle"></i> Salesperson List
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 📊 REPORTS -->
+                <div class="nav-main-item">
+                    <a href="#" class="nav-main-btn" onclick="showModule('reports')">
+                        <i class="fas fa-chart-bar"></i> Reports
+                    </a>
+                    <div class="mega-menu">
+                        <div class="mega-menu-grid">
+                            <div class="mega-category">
+                                <div class="mega-category-title">
+                                    <i class="fas fa-file-invoice"></i> Sales Reports
+                                </div>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('proforma-report')">
+                                    <i class="fas fa-circle"></i> Proforma Report
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('invoice-report')">
+                                    <i class="fas fa-circle"></i> Invoice Report
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('salesperson-performance')">
+                                    <i class="fas fa-circle"></i> Salesperson Performance
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('direct-invoice-report')">
+                                    <i class="fas fa-circle"></i> Direct Invoice Report
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('credit-note-report')">
+                                    <i class="fas fa-circle"></i> Credit Note Report
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('pending-billing')">
+                                    <i class="fas fa-circle"></i> Pending Billing Report
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('billed-area')">
+                                    <i class="fas fa-circle"></i> Billed Area Report
+                                </a>
+                            </div>
+                            
+                            <div class="mega-category">
+                                <div class="mega-category-title">
+                                    <i class="fas fa-industry"></i> Production Reports
+                                </div>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('production-report')">
+                                    <i class="fas fa-circle"></i> Production Report
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('work-order-report')">
+                                    <i class="fas fa-circle"></i> Work Order Report
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('glass-inventory-report')">
+                                    <i class="fas fa-circle"></i> Glass Inventory Report
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('breakage-report')">
+                                    <i class="fas fa-circle"></i> Breakage Report
+                                </a>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('rejection-report')">
+                                    <i class="fas fa-circle"></i> Rejection Report
+                                </a>
+                            </div>
+                            
+                            <div class="mega-category">
+                                <div class="mega-category-title">
+                                    <i class="fas fa-database"></i> System Reports
+                                </div>
+                                <a href="#" class="mega-menu-item" onclick="showSubModule('tally-export')">
+                                    <i class="fas fa-circle"></i> Tally Export Report
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 👤 USER MANAGEMENT -->
+                <div class="nav-main-item">
+                    <a href="#" class="nav-main-btn" onclick="showModule('user-management')">
+                        <i class="fas fa-user-cog"></i> User Management
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- USER INFO -->
+        <div class="user-bar">
+            <div class="text-muted">
+                <i class="fas fa-calendar-alt me-1"></i>
+                <span id="currentDateTime"></span>
             </div>
             <div class="user-info">
-                <span><i class="fas fa-user-circle"></i> Admin User</span>
-                <button class="btn btn-sm btn-outline-light" onclick="logout()">
+                <span class="badge">Administrator</span>
+                <span><i class="fas fa-user-circle me-1"></i>Admin User</span>
+                <button class="btn btn-sm btn-outline-danger" onclick="logout()">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </button>
             </div>
         </div>
-        
-        <nav class="main-nav">
-            <div class="nav-container">
-                <!-- MAIN MODULES -->
-                <div class="nav-item">
-                    <a href="#" class="nav-link-custom active" onclick="showDashboard()">
-                        <i class="fas fa-home"></i> Dashboard
-                    </a>
-                </div>
-                
-                <!-- SALES & INVOICING -->
-                <div class="nav-item">
-                    <a href="#" class="nav-link-custom" onclick="showProforma()">
-                        <i class="fas fa-file-invoice-dollar"></i> Proforma
-                    </a>
-                </div>
-                
-                <div class="nav-item">
-                    <a href="#" class="nav-link-custom" onclick="showQuotation()">
-                        <i class="fas fa-file-alt"></i> Quotation
-                    </a>
-                </div>
-                
-                <div class="nav-item">
-                    <a href="#" class="nav-link-custom" onclick="showGSTInvoice()">
-                        <i class="fas fa-file-invoice"></i> GST Invoice
-                    </a>
-                </div>
-                
-                <!-- ORDER MANAGEMENT -->
-                <div class="nav-item">
-                    <a href="#" class="nav-link-custom" onclick="showOrderManagement()">
-                        <i class="fas fa-clipboard-list"></i> Orders
-                    </a>
-                </div>
-                
-                <!-- CUSTOMER MANAGEMENT -->
-                <div class="nav-item">
-                    <a href="#" class="nav-link-custom" onclick="showCustomerManagement()">
-                        <i class="fas fa-users"></i> Customers
-                    </a>
-                </div>
-                
-                <!-- INVENTORY -->
-                <div class="nav-item">
-                    <a href="#" class="nav-link-custom" onclick="showItemMaster()">
-                        <i class="fas fa-box"></i> Item Master
-                    </a>
-                </div>
-                
-                <!-- GLASS OPERATIONS -->
-                <div class="nav-item">
-                    <a href="#" class="nav-link-custom" onclick="showGlassLines()">
-                        <i class="fas fa-th-large"></i> Glass Lines
-                    </a>
-                </div>
-                
-                <div class="nav-item">
-                    <a href="#" class="nav-link-custom" onclick="showOptimization()">
-                        <i class="fas fa-cube"></i> Optimization
-                    </a>
-                </div>
-                
-                <!-- DISPATCH -->
-                <div class="nav-item">
-                    <a href="#" class="nav-link-custom" onclick="showDispatchPlanner()">
-                        <i class="fas fa-truck-loading"></i> Dispatch
-                    </a>
-                </div>
-                
-                <!-- ACCOUNTING -->
-                <div class="nav-item">
-                    <a href="#" class="nav-link-custom" onclick="showAccounting()">
-                        <i class="fas fa-calculator"></i> Accounting
-                    </a>
-                </div>
-                
-                <!-- REPORTS -->
-                <div class="nav-item">
-                    <a href="#" class="nav-link-custom" onclick="showReports()">
-                        <i class="fas fa-chart-bar"></i> Reports
-                    </a>
-                </div>
-                
-                <!-- ADMINISTRATION -->
-                <div class="nav-item">
-                    <div class="nav-link-custom">
-                        <i class="fas fa-cog"></i> Admin
-                    </div>
-                    <div class="nav-dropdown">
-                        <a href="#" class="dropdown-item" onclick="showUserManagement()">
-                            <i class="fas fa-user-cog"></i> User Management
-                        </a>
-                        <a href="#" class="dropdown-item" onclick="showAdminPanel()">
-                            <i class="fas fa-shield-alt"></i> Admin Panel
-                        </a>
-                        <a href="#" class="dropdown-item" onclick="showSettings()">
-                            <i class="fas fa-cogs"></i> Settings
-                        </a>
-                        <a href="#" class="dropdown-item" onclick="showCustomCharges()">
-                            <i class="fas fa-coins"></i> Custom Charges
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item" onclick="showAttendance()">
-                            <i class="fas fa-calendar-check"></i> Attendance
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </nav>
     </header>
 
     <!-- MAIN CONTENT AREA -->
-    <main class="container">
-        <!-- DASHBOARD SECTION (Default Visible) -->
-        <section id="dashboardSection" class="module-section">
-            <div class="dashboard-welcome">
-                <h2>Welcome to Glass Works ERP</h2>
-                <p class="mb-0">Complete solution for glass manufacturing business management</p>
-            </div>
-            
-            <div class="quick-stats">
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: #e3f2fd; color: #2196f3;">
-                        <i class="fas fa-file-invoice-dollar"></i>
-                    </div>
-                    <h5>₹ 2,45,800</h5>
-                    <p class="text-muted mb-0">Today's Sales</p>
+    <main>
+        <!-- DASHBOARD - CLEAN WITH TEXTURE ONLY -->
+        <section id="dashboard" class="dashboard-texture">
+            <div class="dashboard-logo">S.A.P.U.T.</div>
+            <div class="dashboard-subtitle">Glass Works Enterprise</div>
+            <div class="dashboard-stats">
+                <div class="stat-circle">
+                    <div class="stat-value">₹ 2.8L</div>
+                    <div class="stat-label">Today</div>
                 </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: #f3e5f5; color: #9c27b0;">
-                        <i class="fas fa-clipboard-list"></i>
-                    </div>
-                    <h5>18</h5>
-                    <p class="text-muted mb-0">Pending Orders</p>
+                <div class="stat-circle">
+                    <div class="stat-value">48</div>
+                    <div class="stat-label">Orders</div>
                 </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: #e8f5e9; color: #4caf50;">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h5>156</h5>
-                    <p class="text-muted mb-0">Active Customers</p>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: #fff3e0; color: #ff9800;">
-                        <i class="fas fa-truck-loading"></i>
-                    </div>
-                    <h5>7</h5>
-                    <p class="text-muted mb-0">Today's Dispatch</p>
-                </div>
-            </div>
-            
-            <div class="recent-activity">
-                <h5 class="mb-4">Recent Activities</h5>
-                <div class="activity-item">
-                    <div class="rounded-circle bg-primary text-white p-2">
-                        <i class="fas fa-file-invoice"></i>
-                    </div>
-                    <div>
-                        <strong>PI-0234</strong> created for ABC Traders
-                        <div class="text-muted">10 minutes ago</div>
-                    </div>
-                </div>
-                <div class="activity-item">
-                    <div class="rounded-circle bg-success text-white p-2">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div>
-                        Order <strong>ORD-567</strong> completed
-                        <div class="text-muted">1 hour ago</div>
-                    </div>
-                </div>
-                <div class="activity-item">
-                    <div class="rounded-circle bg-warning text-white p-2">
-                        <i class="fas fa-exclamation-triangle"></i>
-                    </div>
-                    <div>
-                        Low stock alert: Clear Glass 6mm
-                        <div class="text-muted">2 hours ago</div>
-                    </div>
-                </div>
-                <div class="activity-item">
-                    <div class="rounded-circle bg-info text-white p-2">
-                        <i class="fas fa-truck"></i>
-                    </div>
-                    <div>
-                        Dispatch scheduled for Order ORD-556
-                        <div class="text-muted">3 hours ago</div>
-                    </div>
+                <div class="stat-circle">
+                    <div class="stat-value">156</div>
+                    <div class="stat-label">Customers</div>
                 </div>
             </div>
         </section>
 
-        <!-- PROFORMA SECTION (Hidden by default) -->
-        <section id="proformaSection" class="module-section">
-            <div class="section-header">
-                <h4><i class="fas fa-file-invoice-dollar me-2"></i>Proforma Invoice</h4>
-                <p class="text-muted mb-0">Create and manage proforma invoices</p>
+        <!-- MODULE CONTENT AREAS -->
+        <section id="mastersContent" class="content-area">
+            <div class="content-header">
+                <h4><i class="fas fa-cubes me-2"></i>Masters Management</h4>
+                <p class="text-muted mb-0">Manage all master data including items, prices, processes and more</p>
             </div>
-            
-            <!-- PROFORMA CONTENT WILL GO HERE -->
-            <div class="alert alert-info">
-                <i class="fas fa-info-circle"></i> Proforma invoice section content will be loaded here.
+            <!-- Content will be loaded here -->
+        </section>
+
+        <section id="transactionsContent" class="content-area">
+            <div class="content-header">
+                <h4><i class="fas fa-exchange-alt me-2"></i>Transactions</h4>
+                <p class="text-muted mb-0">Process sales invoices, work orders and production tasks</p>
             </div>
         </section>
 
-        <!-- OTHER SECTIONS (Add similar structure for each module) -->
-        <section id="quotationSection" class="module-section">
-            <div class="section-header">
-                <h4><i class="fas fa-file-alt me-2"></i>Quotation Management</h4>
-                <p class="text-muted mb-0">Create and manage quotations</p>
+        <section id="inventoryContent" class="content-area">
+            <div class="content-header">
+                <h4><i class="fas fa-warehouse me-2"></i>Inventory Management</h4>
+                <p class="text-muted mb-0">Track hardware and glass inventory</p>
             </div>
         </section>
-        
-        <!-- Add similar sections for other modules -->
-        <!-- Order Management, Customer Management, etc. -->
-        
+
+        <!-- Add similar sections for other main modules -->
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Initialize - Show dashboard by default
+        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+            
+            // Show dashboard by default
             showDashboard();
         });
         
-        // Function to show a specific module
-        function showModule(moduleId) {
-            // Hide all modules
-            document.querySelectorAll('.module-section').forEach(module => {
-                module.style.display = 'none';
-            });
-            
-            // Show selected module
-            document.getElementById(moduleId).style.display = 'block';
-            
-            // Update active menu item
-            document.querySelectorAll('.nav-link-custom').forEach(link => {
-                link.classList.remove('active');
-            });
-            
-            // Update floating buttons title
-            document.getElementById('currentModule').textContent = 
-                document.querySelector('#' + moduleId + ' h4').textContent;
+        // Update date and time
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            document.getElementById('currentDateTime').textContent = 
+                now.toLocaleDateString('en-IN', options);
         }
         
-        // Module navigation functions
+        // Show main module
+        function showModule(moduleName) {
+            // Hide all content areas
+            document.querySelectorAll('.content-area').forEach(area => {
+                area.classList.remove('active');
+                area.style.display = 'none';
+            });
+            
+            // Hide dashboard
+            document.getElementById('dashboard').style.display = 'none';
+            
+            // Remove active class from all nav buttons
+            document.querySelectorAll('.nav-main-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected module content
+            if(moduleName === 'dashboard') {
+                document.getElementById('dashboard').style.display = 'flex';
+            } else {
+                const contentId = moduleName + 'Content';
+                const contentArea = document.getElementById(contentId);
+                if(contentArea) {
+                    contentArea.style.display = 'block';
+                    contentArea.classList.add('active');
+                }
+                
+                // Add active class to clicked button
+                const activeBtn = document.querySelector(`.nav-main-btn[onclick="showModule('${moduleName}')"]`);
+                if(activeBtn) activeBtn.classList.add('active');
+            }
+        }
+        
+        // Show dashboard
         function showDashboard() {
-            showModule('dashboardSection');
-            document.querySelector('.nav-link-custom[onclick="showDashboard()"]').classList.add('active');
+            showModule('dashboard');
         }
         
-        function showProforma() {
-            showModule('proformaSection');
-            document.querySelector('.nav-link-custom[onclick="showProforma()"]').classList.add('active');
+        // Show sub-module
+        function showSubModule(subModule) {
+            alert(`Opening ${subModule.replace('-', ' ')} module...`);
+            // In actual implementation, load content dynamically
         }
         
-        function showQuotation() {
-            showModule('quotationSection');
-            document.querySelector('.nav-link-custom[onclick="showQuotation()"]').classList.add('active');
-        }
-        
-        function showGSTInvoice() {
-            alert('GST Invoice module will be loaded here');
-            showDashboard(); // Return to dashboard for now
-        }
-        
-        function showOrderManagement() {
-            alert('Order Management module will be loaded here');
-            showDashboard();
-        }
-        
-        function showCustomerManagement() {
-            alert('Customer Management module will be loaded here');
-            showDashboard();
-        }
-        
-        function showItemMaster() {
-            alert('Item Master module will be loaded here');
-            showDashboard();
-        }
-        
-        function showGlassLines() {
-            alert('Glass Lines module will be loaded here');
-            showDashboard();
-        }
-        
-        function showOptimization() {
-            alert('Optimization module will be loaded here');
-            showDashboard();
-        }
-        
-        function showDispatchPlanner() {
-            alert('Dispatch Planner module will be loaded here');
-            showDashboard();
-        }
-        
-        function showAccounting() {
-            alert('Accounting module will be loaded here');
-            showDashboard();
-        }
-        
-        function showReports() {
-            alert('Reports module will be loaded here');
-            showDashboard();
-        }
-        
-        function showUserManagement() {
-            alert('User Management module will be loaded here');
-            showDashboard();
-        }
-        
-        function showAdminPanel() {
-            alert('Admin Panel module will be loaded here');
-            showDashboard();
-        }
-        
-        function showSettings() {
-            alert('Settings module will be loaded here');
-            showDashboard();
-        }
-        
-        function showCustomCharges() {
-            alert('Custom Charges module will be loaded here');
-            showDashboard();
-        }
-        
-        function showAttendance() {
-            alert('Attendance module will be loaded here');
-            showDashboard();
-        }
-        
+        // Logout function
         function logout() {
             if(confirm('Are you sure you want to logout?')) {
                 alert('Logged out successfully');
                 showDashboard();
             }
-        }
-        
-        function printCurrent() {
-            window.print();
         }
         
         // Keyboard shortcuts
@@ -674,11 +825,11 @@
             }
             if(e.ctrlKey && e.key === 'p') {
                 e.preventDefault();
-                showProforma();
+                showModule('proforma');
             }
             if(e.ctrlKey && e.shiftKey && e.key === 'P') {
                 e.preventDefault();
-                printCurrent();
+                window.print();
             }
         });
     </script>

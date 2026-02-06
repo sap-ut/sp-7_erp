@@ -34,6 +34,7 @@
             color: var(--text-primary);
             overflow-x: hidden;
             line-height: 1.6;
+            height: 100vh;
         }
         
         /* SPLASH SCREEN */
@@ -176,7 +177,8 @@
         /* MAIN APPLICATION */
         #mainApp {
             display: none;
-            min-height: 100vh;
+            height: 100vh;
+            background: var(--background);
         }
         
         /* HEADER - COMPACT MENU BAR - TOP POSITION */
@@ -345,21 +347,15 @@
             gap: 1rem;
         }
         
-        /* MAIN CONTENT AREA - BELOW MENU BAR */
+        /* MAIN CONTENT AREA - REMOVED COMPLETELY */
         .main-content {
-            min-height: calc(100vh - 120px);
-            margin-top: 120px; /* Menu bar ke niche */
-            padding: 2rem;
-            background: var(--surface);
-            width: 100%;
+            display: none; /* Completely hide white screen */
         }
         
-        /* MODULE CONTENT AREAS */
+        /* MODULE CONTENT AREAS - ONLY SHOWS WHEN MODULE SELECTED */
         .module-content {
-            padding: 2rem;
             display: none;
-            min-height: calc(100vh - 120px);
-            margin-top: 120px; /* Menu bar ke niche */
+            min-height: 100vh;
             background: var(--background);
             width: 100%;
         }
@@ -387,6 +383,7 @@
             margin-bottom: 2rem;
             border-left: 4px solid var(--primary);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            margin-top: 120px; /* To appear below menu bar */
         }
         
         /* FLOATING BUTTONS */
@@ -457,7 +454,7 @@
                 max-height: 60vh;
             }
             
-            .main-content, .module-content {
+            .module-header {
                 margin-top: 100px;
                 padding: 1rem;
             }
@@ -818,11 +815,9 @@
             </div>
         </header>
 
-        <!-- MAIN CONTENT - BELOW MENU BAR -->
-        <main class="main-content" id="homeScreen">
-            <!-- White screen below menu -->
-        </main>
-
+        <!-- NO MAIN CONTENT AREA - COMPLETELY REMOVED -->
+        <!-- Only module content will show when needed -->
+        
         <!-- MODULE CONTENT AREAS - HIDDEN BY DEFAULT -->
         <div class="module-content" id="moduleContent">
             <!-- Content will be loaded here when a module is selected -->
@@ -861,8 +856,8 @@
                     // Show main application
                     document.getElementById('mainApp').style.display = 'block';
                     
-                    // Show home screen
-                    showHome();
+                    // Show just the menu bar (no white screen)
+                    // Nothing else needs to be shown
                 } else {
                     alert('Invalid credentials! Use admin / admin123');
                 }
@@ -931,15 +926,12 @@
             currentDropdown = null;
         }
         
-        // Show home screen
+        // Show home (just menu bar)
         function showHome() {
             // Close all dropdowns
             closeAllDropdowns();
             
-            // Show home screen
-            document.getElementById('homeScreen').style.display = 'block';
-            
-            // Hide module content
+            // Hide module content if visible
             document.getElementById('moduleContent').style.display = 'none';
             document.getElementById('moduleContent').classList.remove('active');
             
@@ -953,9 +945,6 @@
         function handleSubModule(subModule) {
             // Close all dropdowns
             closeAllDropdowns();
-            
-            // Hide home screen
-            document.getElementById('homeScreen').style.display = 'none';
             
             // Show module content
             const moduleContent = document.getElementById('moduleContent');

@@ -179,12 +179,14 @@
             min-height: 100vh;
         }
         
-        /* HEADER - COMPACT MENU BAR */
+        /* HEADER - COMPACT MENU BAR - TOP POSITION */
         .header-container {
             background: var(--surface);
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
-            position: sticky;
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 100;
             width: 100%;
         }
@@ -343,9 +345,10 @@
             gap: 1rem;
         }
         
-        /* MAIN CONTENT AREA - BLANK WHITE SCREEN */
+        /* MAIN CONTENT AREA - BELOW MENU BAR */
         .main-content {
             min-height: calc(100vh - 120px);
+            margin-top: 120px; /* Menu bar ke niche */
             padding: 2rem;
             background: var(--surface);
             width: 100%;
@@ -356,6 +359,7 @@
             padding: 2rem;
             display: none;
             min-height: calc(100vh - 120px);
+            margin-top: 120px; /* Menu bar ke niche */
             background: var(--background);
             width: 100%;
         }
@@ -452,6 +456,11 @@
                 right: 1rem;
                 max-height: 60vh;
             }
+            
+            .main-content, .module-content {
+                margin-top: 100px;
+                padding: 1rem;
+            }
         }
         
         @media (max-width: 480px) {
@@ -517,7 +526,7 @@
             </button>
         </div>
 
-        <!-- HEADER - COMPACT MENU BAR WITH CLICKABLE DROPDOWNS -->
+        <!-- HEADER - MENU BAR AT THE TOP -->
         <header class="header-container">
             <nav class="main-nav">
                 <!-- 🧱 MASTERS -->
@@ -809,9 +818,9 @@
             </div>
         </header>
 
-        <!-- MAIN CONTENT - BLANK WHITE SCREEN -->
+        <!-- MAIN CONTENT - BELOW MENU BAR -->
         <main class="main-content" id="homeScreen">
-            <!-- Blank white screen - nothing here -->
+            <!-- White screen below menu -->
         </main>
 
         <!-- MODULE CONTENT AREAS - HIDDEN BY DEFAULT -->

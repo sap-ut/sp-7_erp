@@ -173,7 +173,7 @@
             box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
         }
         
-        /* MAIN APPLICATION */
+        /* MAIN APPLICATION - NO DASHBOARD */
         #mainApp {
             display: none;
         }
@@ -233,7 +233,7 @@
             background: rgba(99, 102, 241, 0.12);
         }
         
-        /* FIXED: Arrow indicator for dropdown */
+        /* Arrow indicator for dropdown */
         .nav-btn.dropdown-toggle::after {
             content: '▾';
             margin-left: 0.25rem;
@@ -258,7 +258,7 @@
             overflow-y: auto;
         }
         
-        /* FIXED: Show dropdown on hover */
+        /* Show dropdown on hover */
         .nav-item:hover .dropdown-menu {
             display: block;
             animation: dropdownFade 0.2s ease-out;
@@ -334,85 +334,78 @@
             gap: 1rem;
         }
         
-        /* DASHBOARD */
-        .dashboard-wrapper {
+        /* MAIN CONTENT AREA - EMPTY BACKGROUND (NO DASHBOARD) */
+        .main-content {
             min-height: calc(100vh - 120px);
-            padding: 2rem;
+            padding: 0;
             background: var(--background);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            max-width: 1400px;
-            margin: 0 auto;
+        .welcome-message {
+            text-align: center;
+            padding: 3rem;
+            max-width: 600px;
         }
         
-        .dashboard-card {
+        .welcome-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .welcome-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .welcome-instructions {
             background: var(--surface);
             border-radius: 16px;
             padding: 2rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid transparent;
+            margin-top: 2rem;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            border: 1px solid var(--border);
         }
         
-        .dashboard-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
-            border-color: rgba(99, 102, 241, 0.2);
+        .instruction-list {
+            list-style: none;
+            padding: 0;
         }
         
-        .card-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
+        .instruction-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            gap: 1rem;
         }
         
-        .card-subtitle {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.5;
+        .instruction-list li:last-child {
+            border-bottom: none;
         }
         
-        .card-actions {
-            display: flex;
-            gap: 0.75rem;
-            margin-top: 1.5rem;
-        }
-        
-        .card-action-btn {
-            padding: 0.5rem 1rem;
-            background: rgba(99, 102, 241, 0.1);
+        .instruction-list li i {
             color: var(--primary);
-            border: none;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
+            width: 20px;
         }
         
-        .card-action-btn:hover {
-            background: var(--primary);
-            color: white;
-        }
-        
-        /* MODULE CONTENT AREAS */
-        .content-area {
+        /* MODULE CONTENT AREAS - HIDDEN BY DEFAULT */
+        .module-content {
             padding: 2rem;
             display: none;
             min-height: calc(100vh - 120px);
             background: var(--background);
+            width: 100%;
         }
         
-        .content-area.active {
+        .module-content.active {
             display: block;
             animation: contentFade 0.3s ease-out;
         }
@@ -426,6 +419,15 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+        
+        .module-header {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
         }
         
         /* FLOATING BUTTONS */
@@ -494,6 +496,10 @@
                 right: 1rem;
                 max-height: 60vh;
             }
+            
+            .welcome-title {
+                font-size: 2rem;
+            }
         }
         
         @media (max-width: 480px) {
@@ -503,6 +509,10 @@
             
             .nav-btn {
                 padding: 0.75rem;
+            }
+            
+            .welcome-message {
+                padding: 1.5rem;
             }
         }
     </style>
@@ -535,14 +545,14 @@
         </div>
     </div>
 
-    <!-- MAIN APPLICATION -->
+    <!-- MAIN APPLICATION - NO DASHBOARD -->
     <div id="mainApp">
         <!-- FLOATING BUTTONS -->
         <div class="float-actions">
-            <button class="float-btn" onclick="showDashboard()" title="Dashboard">
+            <button class="float-btn" onclick="showHome()" title="Home">
                 <i class="fas fa-home"></i>
             </button>
-            <button class="float-btn" onclick="handleProforma()" title="Proforma">
+            <button class="float-btn" onclick="handleSubModule('proforma')" title="Proforma">
                 <i class="fas fa-file-invoice"></i>
             </button>
             <button class="float-btn" onclick="window.print()" title="Print">
@@ -555,11 +565,11 @@
             <nav class="main-nav">
                 <!-- 🧱 MASTERS -->
                 <div class="nav-item">
-                    <button class="nav-btn dropdown-toggle" onclick="toggleDropdown('masters-dropdown')">
+                    <button class="nav-btn dropdown-toggle">
                         <i class="fas fa-cubes"></i>
                         <span>Masters</span>
                     </button>
-                    <div class="dropdown-menu" id="masters-dropdown">
+                    <div class="dropdown-menu">
                         <div class="dropdown-header">
                             <i class="fas fa-box"></i> Product Masters
                         </div>
@@ -613,11 +623,11 @@
                 
                 <!-- 🔁 TRANSACTIONS -->
                 <div class="nav-item">
-                    <button class="nav-btn dropdown-toggle" onclick="toggleDropdown('transactions-dropdown')">
+                    <button class="nav-btn dropdown-toggle">
                         <i class="fas fa-exchange-alt"></i>
                         <span>Transactions</span>
                     </button>
-                    <div class="dropdown-menu" id="transactions-dropdown">
+                    <div class="dropdown-menu">
                         <div class="dropdown-header">
                             <i class="fas fa-file-invoice-dollar"></i> Sales Transactions
                         </div>
@@ -653,11 +663,11 @@
                 
                 <!-- 📦 INVENTORY -->
                 <div class="nav-item">
-                    <button class="nav-btn dropdown-toggle" onclick="toggleDropdown('inventory-dropdown')">
+                    <button class="nav-btn dropdown-toggle">
                         <i class="fas fa-warehouse"></i>
                         <span>Inventory</span>
                     </button>
-                    <div class="dropdown-menu" id="inventory-dropdown">
+                    <div class="dropdown-menu">
                         <div class="dropdown-header">
                             <i class="fas fa-boxes"></i> Stock Management
                         </div>
@@ -672,11 +682,11 @@
                 
                 <!-- ⚙️ SETTINGS -->
                 <div class="nav-item">
-                    <button class="nav-btn dropdown-toggle" onclick="toggleDropdown('settings-dropdown')">
+                    <button class="nav-btn dropdown-toggle">
                         <i class="fas fa-sliders-h"></i>
                         <span>Settings</span>
                     </button>
-                    <div class="dropdown-menu" id="settings-dropdown">
+                    <div class="dropdown-menu">
                         <div class="dropdown-header">
                             <i class="fas fa-tools"></i> Configuration
                         </div>
@@ -718,11 +728,11 @@
                 
                 <!-- 👥 CUSTOMER -->
                 <div class="nav-item">
-                    <button class="nav-btn dropdown-toggle" onclick="toggleDropdown('customer-dropdown')">
+                    <button class="nav-btn dropdown-toggle">
                         <i class="fas fa-users"></i>
                         <span>Customers</span>
                     </button>
-                    <div class="dropdown-menu" id="customer-dropdown">
+                    <div class="dropdown-menu">
                         <div class="dropdown-header">
                             <i class="fas fa-address-card"></i> Customer Management
                         </div>
@@ -737,11 +747,11 @@
                 
                 <!-- 🧑‍💼 SALES -->
                 <div class="nav-item">
-                    <button class="nav-btn dropdown-toggle" onclick="toggleDropdown('sales-dropdown')">
+                    <button class="nav-btn dropdown-toggle">
                         <i class="fas fa-user-tie"></i>
                         <span>Sales</span>
                     </button>
-                    <div class="dropdown-menu" id="sales-dropdown">
+                    <div class="dropdown-menu">
                         <div class="dropdown-header">
                             <i class="fas fa-chart-line"></i> Sales Team
                         </div>
@@ -756,11 +766,11 @@
                 
                 <!-- 📊 REPORTS -->
                 <div class="nav-item">
-                    <button class="nav-btn dropdown-toggle" onclick="toggleDropdown('reports-dropdown')">
+                    <button class="nav-btn dropdown-toggle">
                         <i class="fas fa-chart-bar"></i>
                         <span>Reports</span>
                     </button>
-                    <div class="dropdown-menu" id="reports-dropdown" style="max-height: 500px;">
+                    <div class="dropdown-menu" style="max-height: 500px;">
                         <div class="dropdown-header">
                             <i class="fas fa-file-invoice"></i> Sales Reports
                         </div>
@@ -842,142 +852,47 @@
             </div>
         </header>
 
-        <!-- MAIN CONTENT -->
-        <main>
-            <!-- DASHBOARD -->
-            <section id="dashboard" class="dashboard-wrapper">
-                <div class="dashboard-grid">
-                    <div class="dashboard-card">
-                        <div class="card-title">
-                            Quick Actions
-                            <i class="fas fa-bolt" style="color: var(--primary);"></i>
-                        </div>
-                        <div class="card-subtitle">
-                            Quickly access frequently used features and perform common tasks.
-                        </div>
-                        <div class="card-actions">
-                            <button class="card-action-btn" onclick="handleSubModule('proforma')">
-                                New Proforma
-                            </button>
-                            <button class="card-action-btn" onclick="handleSubModule('customer-registration')">
-                                Add Customer
-                            </button>
-                            <button class="card-action-btn" onclick="showModule('reports')">
-                                View Reports
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="dashboard-card">
-                        <div class="card-title">
-                            Recent Activities
-                            <i class="fas fa-history" style="color: var(--success);"></i>
-                        </div>
-                        <div class="card-subtitle">
-                            Track recent system activities and user actions.
-                        </div>
-                        <div class="card-actions">
-                            <button class="card-action-btn" onclick="showModule('transactions')">
-                                View All
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="dashboard-card">
-                        <div class="card-title">
-                            System Overview
-                            <i class="fas fa-chart-line" style="color: var(--info);"></i>
-                        </div>
-                        <div class="card-subtitle">
-                            Monitor system performance, user activity, and business metrics.
-                        </div>
-                        <div class="card-actions">
-                            <button class="card-action-btn" onclick="showModule('reports')">
-                                Analytics
-                            </button>
-                            <button class="card-action-btn" onclick="showModule('system-settings')">
-                                Settings
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="dashboard-card">
-                        <div class="card-title">
-                            Inventory Status
-                            <i class="fas fa-boxes" style="color: var(--warning);"></i>
-                        </div>
-                        <div class="card-subtitle">
-                            Check current stock levels and inventory status across warehouses.
-                        </div>
-                        <div class="card-actions">
-                            <button class="card-action-btn" onclick="showModule('inventory')">
-                                View Inventory
-                            </button>
-                            <button class="card-action-btn" onclick="handleSubModule('glass-inventory-report')">
-                                Reports
-                            </button>
-                        </div>
-                    </div>
+        <!-- MAIN CONTENT - NO DASHBOARD, JUST WELCOME SCREEN -->
+        <main class="main-content" id="homeScreen">
+            <div class="welcome-message">
+                <h1 class="welcome-title">Welcome to JP Solutions</h1>
+                <p class="welcome-subtitle">
+                    Complete Enterprise Management System for Glass Manufacturing Business.
+                    Use the menu bar above to access all system features.
+                </p>
+                
+                <div class="welcome-instructions">
+                    <h5 class="mb-3"><i class="fas fa-lightbulb me-2"></i>Quick Start Guide</h5>
+                    <ul class="instruction-list">
+                        <li>
+                            <i class="fas fa-mouse-pointer"></i>
+                            <span><strong>Hover</strong> over any menu item to see dropdown options</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-cubes"></i>
+                            <span><strong>Masters</strong> - Configure all system master data</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-exchange-alt"></i>
+                            <span><strong>Transactions</strong> - Process sales and production orders</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-warehouse"></i>
+                            <span><strong>Inventory</strong> - Manage stock and materials</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-cog"></i>
+                            <span><strong>Settings</strong> - Configure system preferences</span>
+                        </li>
+                    </ul>
                 </div>
-            </section>
-
-            <!-- MODULE CONTENT AREAS -->
-            <section id="mastersContent" class="content-area">
-                <div class="container">
-                    <h3 class="mb-4"><i class="fas fa-cubes me-2"></i>Masters Management</h3>
-                    <p>Master data management section</p>
-                </div>
-            </section>
-
-            <section id="transactionsContent" class="content-area">
-                <div class="container">
-                    <h3 class="mb-4"><i class="fas fa-exchange-alt me-2"></i>Transactions</h3>
-                    <p>Transaction management section</p>
-                </div>
-            </section>
-
-            <section id="inventoryContent" class="content-area">
-                <div class="container">
-                    <h3 class="mb-4"><i class="fas fa-warehouse me-2"></i>Inventory</h3>
-                    <p>Inventory management section</p>
-                </div>
-            </section>
-
-            <section id="systemSettingsContent" class="content-area">
-                <div class="container">
-                    <h3 class="mb-4"><i class="fas fa-sliders-h me-2"></i>System Settings</h3>
-                    <p>System settings management section</p>
-                </div>
-            </section>
-
-            <section id="customerContent" class="content-area">
-                <div class="container">
-                    <h3 class="mb-4"><i class="fas fa-users me-2"></i>Customer Management</h3>
-                    <p>Customer management section</p>
-                </div>
-            </section>
-
-            <section id="salesContent" class="content-area">
-                <div class="container">
-                    <h3 class="mb-4"><i class="fas fa-user-tie me-2"></i>Sales Management</h3>
-                    <p>Sales management section</p>
-                </div>
-            </section>
-
-            <section id="reportsContent" class="content-area">
-                <div class="container">
-                    <h3 class="mb-4"><i class="fas fa-chart-bar me-2"></i>Reports</h3>
-                    <p>Reports section</p>
-                </div>
-            </section>
-
-            <section id="userManagementContent" class="content-area">
-                <div class="container">
-                    <h3 class="mb-4"><i class="fas fa-user-cog me-2"></i>User Management</h3>
-                    <p>User management section</p>
-                </div>
-            </section>
+            </div>
         </main>
+
+        <!-- MODULE CONTENT AREAS - HIDDEN BY DEFAULT -->
+        <div class="module-content" id="moduleContent">
+            <!-- Content will be loaded here when a module is selected -->
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -1010,10 +925,19 @@
                     // Show main application
                     document.getElementById('mainApp').style.display = 'block';
                     
-                    // Show dashboard
-                    showDashboard();
+                    // Show home screen
+                    showHome();
                 } else {
                     alert('Invalid credentials! Use admin / admin123');
+                }
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!event.target.closest('.nav-item')) {
+                    document.querySelectorAll('.dropdown-menu').forEach(dropdown => {
+                        dropdown.style.display = 'none';
+                    });
                 }
             });
         });
@@ -1036,64 +960,19 @@
                 `${dateStr} | ${timeStr}`;
         }
         
-        // Show main module
-        function showModule(moduleName) {
-            // Hide all content areas
-            document.querySelectorAll('.content-area').forEach(area => {
-                area.classList.remove('active');
-                area.style.display = 'none';
-            });
+        // Show home screen
+        function showHome() {
+            // Show home screen
+            document.getElementById('homeScreen').style.display = 'flex';
             
-            // Hide dashboard
-            document.getElementById('dashboard').style.display = 'none';
+            // Hide module content
+            document.getElementById('moduleContent').style.display = 'none';
+            document.getElementById('moduleContent').classList.remove('active');
             
             // Remove active class from all nav buttons
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            
-            // Show selected module content
-            if(moduleName === 'dashboard') {
-                document.getElementById('dashboard').style.display = 'block';
-            } else {
-                const contentId = moduleName + 'Content';
-                const contentArea = document.getElementById(contentId);
-                if(contentArea) {
-                    contentArea.style.display = 'block';
-                    contentArea.classList.add('active');
-                }
-                
-                // Add active class to clicked button
-                const activeBtn = document.querySelector(`.nav-btn[onclick="showModule('${moduleName}')"]`);
-                if(activeBtn) activeBtn.classList.add('active');
-            }
-        }
-        
-        // Show dashboard
-        function showDashboard() {
-            showModule('dashboard');
-            // Remove active class from all nav buttons
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-        }
-        
-        // Toggle dropdown
-        function toggleDropdown(dropdownId) {
-            const dropdown = document.getElementById(dropdownId);
-            const allDropdowns = document.querySelectorAll('.dropdown-menu');
-            
-            allDropdowns.forEach(d => {
-                if (d.id !== dropdownId) {
-                    d.style.display = 'none';
-                }
-            });
-            
-            if (dropdown.style.display === 'block') {
-                dropdown.style.display = 'none';
-            } else {
-                dropdown.style.display = 'block';
-            }
         }
         
         // Handle sub-module click
@@ -1103,72 +982,129 @@
                 dropdown.style.display = 'none';
             });
             
-            // Show alert with module name
+            // Hide home screen
+            document.getElementById('homeScreen').style.display = 'none';
+            
+            // Show module content
+            const moduleContent = document.getElementById('moduleContent');
+            moduleContent.style.display = 'block';
+            moduleContent.classList.add('active');
+            
+            // Show module name in content area
             const moduleName = subModule.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-            alert(`Opening ${moduleName}...`);
+            moduleContent.innerHTML = `
+                <div class="module-header">
+                    <h3><i class="fas fa-${getModuleIcon(subModule)} me-2"></i>${moduleName}</h3>
+                    <p class="text-muted mb-0">${getModuleDescription(subModule)}</p>
+                </div>
+                <div class="container">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        This is the <strong>${moduleName}</strong> module. Actual content will be loaded here.
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Module Features</h5>
+                                    <p class="card-text">All features related to ${moduleName.toLowerCase()} will be available here.</p>
+                                    <button class="btn btn-primary" onclick="showHome()">
+                                        <i class="fas fa-arrow-left me-2"></i>Back to Home
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Quick Actions</h5>
+                                    <div class="d-grid gap-2">
+                                        <button class="btn btn-outline-primary">Add New</button>
+                                        <button class="btn btn-outline-success">View List</button>
+                                        <button class="btn btn-outline-info">Generate Report</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
             
-            // Map sub-module to main module
-            const moduleMap = {
-                'item-master': 'masters',
-                'price-master': 'masters',
-                'process-master': 'masters',
-                'cutting-rule': 'masters',
-                'glass-size': 'masters',
-                'glass-type': 'masters',
-                'route-master': 'masters',
-                'payment-terms': 'masters',
-                'film-type': 'masters',
-                'bank-master': 'masters',
-                'vehicle-master': 'masters',
-                'additional-charges': 'masters',
-                'remarks-master': 'masters',
-                'proforma': 'transactions',
-                'work-order': 'transactions',
-                'sales-invoice': 'transactions',
-                'direct-invoice': 'transactions',
-                'credit-note': 'transactions',
-                'cutting-optimizer': 'transactions',
-                'label-generation': 'transactions',
-                'hardware-inventory': 'inventory',
-                'glass-inventory': 'inventory',
-                'default-config': 'system-settings',
-                'file-storage': 'system-settings',
-                'network-config': 'system-settings',
-                'data-backup': 'system-settings',
-                'sms-email': 'system-settings',
-                'billing-config': 'system-settings',
-                'print-config': 'system-settings',
-                'user-access': 'system-settings',
-                'software-update': 'system-settings',
-                'customer-registration': 'customer',
-                'customer-list': 'customer',
-                'salesperson-registration': 'sales',
-                'salesperson-list': 'sales',
-                'proforma-report': 'reports',
-                'invoice-report': 'reports',
-                'salesperson-performance': 'reports',
-                'production-report': 'reports',
-                'work-order-report': 'reports',
-                'glass-inventory-report': 'reports',
-                'breakage-report': 'reports',
-                'rejection-report': 'reports',
-                'direct-invoice-report': 'reports',
-                'credit-note-report': 'reports',
-                'pending-billing': 'reports',
-                'billed-area': 'reports',
-                'tally-export': 'reports',
-                'user-management': 'user-management'
-            };
-            
-            const mainModule = moduleMap[subModule];
-            if (mainModule) {
-                showModule(mainModule + 'Content');
-            }
+            // Remove active class from all nav buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
         }
         
-        // Handle proforma from floating button
-        function handleProforma() {
-            handleSubModule('proforma');
+        // Get module icon
+        function getModuleIcon(subModule) {
+            const iconMap = {
+                'item-master': 'box',
+                'price-master': 'tag',
+                'process-master': 'cogs',
+                'cutting-rule': 'cut',
+                'glass-size': 'expand-alt',
+                'glass-type': 'glass-whiskey',
+                'route-master': 'route',
+                'payment-terms': 'handshake',
+                'film-type': 'film',
+                'bank-master': 'university',
+                'vehicle-master': 'truck',
+                'additional-charges': 'coins',
+                'remarks-master': 'comment-alt',
+                'proforma': 'file-invoice-dollar',
+                'work-order': 'clipboard-list',
+                'sales-invoice': 'file-invoice',
+                'direct-invoice': 'receipt',
+                'credit-note': 'undo-alt',
+                'cutting-optimizer': 'cut',
+                'label-generation': 'tags',
+                'hardware-inventory': 'tools',
+                'glass-inventory': 'glass-whiskey',
+                'default-config': 'cog',
+                'file-storage': 'hdd',
+                'network-config': 'network-wired',
+                'data-backup': 'database',
+                'sms-email': 'envelope',
+                'billing-config': 'file-invoice-dollar',
+                'print-config': 'print',
+                'user-access': 'user-shield',
+                'software-update': 'sync-alt',
+                'customer-registration': 'user-plus',
+                'customer-list': 'list-alt',
+                'salesperson-registration': 'user-plus',
+                'salesperson-list': 'users-cog',
+                'proforma-report': 'file-invoice',
+                'invoice-report': 'file-invoice-dollar',
+                'salesperson-performance': 'chart-line',
+                'production-report': 'industry',
+                'work-order-report': 'clipboard-check',
+                'glass-inventory-report': 'boxes',
+                'breakage-report': 'times-circle',
+                'rejection-report': 'ban',
+                'direct-invoice-report': 'receipt',
+                'credit-note-report': 'undo-alt',
+                'pending-billing': 'clock',
+                'billed-area': 'ruler-combined',
+                'tally-export': 'file-export',
+                'user-management': 'users-cog'
+            };
+            
+            return iconMap[subModule] || 'cog';
+        }
+        
+        // Get module description
+        function getModuleDescription(subModule) {
+            const descMap = {
+                'item-master': 'Manage product items and specifications',
+                'price-master': 'Configure pricing for all products',
+                'proforma': 'Create and manage proforma invoices',
+                'sales-invoice': 'Generate sales invoices',
+                'customer-registration': 'Register new customers',
+                'user-management': 'Manage system users and permissions'
+            };
+            
+            return descMap[subModule] || 'Module management section';
         }
         
         // Logout function
@@ -1187,20 +1123,11 @@
             }
         }
         
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!event.target.closest('.nav-item')) {
-                document.querySelectorAll('.dropdown-menu').forEach(dropdown => {
-                    dropdown.style.display = 'none';
-                });
-            }
-        });
-        
         // Keyboard shortcuts
         document.addEventListener('keydown', function(e) {
             if(e.ctrlKey && e.key === 'Home') {
                 e.preventDefault();
-                showDashboard();
+                showHome();
             }
             if(e.ctrlKey && e.key === 'p') {
                 e.preventDefault();

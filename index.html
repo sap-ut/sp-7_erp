@@ -9,42 +9,40 @@
 *{box-sizing:border-box;font-family:Segoe UI,Arial}
 body{margin:0;background:#f8fafc;color:#1e293b}
 
-/* ===== EMBEDDED LOGO ===== */
-:root{
-  --jp-logo: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABAAAAAQACAIAAADwf7zUAADIB2NhQlgAAMgHanVtYgAAAB5qdW1kYzJwYQARABCAAACqADibcQNjMnBhAAAANvRqdW1iAAAAR2p1bWRjMm1hABEAEIAAAKoAOJtxA3VybjpjMnBhOjZkZTk4YjA3LWEyZTctNDRiYy05YWMwLTRkNGYy
-...TRUNCATED FOR CHAT DISPLAY...
-");
+/* ===== JP LOGO (STAR + JP) ===== */
+.jp-logo{
+  width:180px;
+  animation:logoPop 1.6s ease;
+}
+.jp-logo svg{
+  width:100%;
+  background:linear-gradient(135deg,#16a34a,#22c55e);
+  border-radius:50%;
+  padding:20px;
+  box-shadow:0 20px 40px rgba(0,0,0,.3);
+}
+@keyframes logoPop{
+  from{transform:scale(.4);opacity:0}
+  to{transform:scale(1);opacity:1}
 }
 
 /* ===== SPLASH ===== */
 #splash{
   position:fixed;inset:0;
-  background:
-    radial-gradient(circle at center, rgba(0,0,0,.15), rgba(0,0,0,.65)),
-    #ffffff;
+  background:#ffffff;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
   z-index:10;
 }
-.logo-anim{
-  width:220px;height:220px;
-  background:var(--jp-logo) center/contain no-repeat;
-  animation:zoomIn 1.6s ease forwards;
-}
 #splash p{
   margin-top:14px;
   color:#64748b;
-  animation:fadeUp 1.8s ease;
-}
-
-@keyframes zoomIn{
-  from{transform:scale(.3);opacity:0}
-  to{transform:scale(1);opacity:1}
+  animation:fadeUp 1.6s ease;
 }
 @keyframes fadeUp{
-  from{opacity:0;transform:translateY(15px)}
+  from{opacity:0;transform:translateY(12px)}
   to{opacity:1;transform:translateY(0)}
 }
 
@@ -54,8 +52,8 @@ body{margin:0;background:#f8fafc;color:#1e293b}
   height:100vh;
   background:
     linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.65)),
-    var(--jp-logo) center/420px no-repeat,
-    linear-gradient(135deg,#e2e8f0,#f8fafc);
+    radial-gradient(circle at center, rgba(22,163,74,.35) 0%, transparent 60%),
+    #f8fafc;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -83,7 +81,7 @@ body{margin:0;background:#f8fafc;color:#1e293b}
 #error{color:#dc2626;font-size:13px}
 
 /* ===== MENU PAGE ===== */
-#menuPage{display:none;min-height:100vh}
+#menuPage{display:none;min-height:100vh;background:#f1f5f9}
 
 /* NAVBAR */
 .navbar{
@@ -91,10 +89,13 @@ body{margin:0;background:#f8fafc;color:#1e293b}
   padding:0 18px;
   display:flex;align-items:center;
 }
-.brand{color:#fff;font-size:18px;font-weight:700;margin-right:30px}
+.brand{
+  color:#fff;font-size:18px;
+  font-weight:700;margin-right:30px;
+}
 
 /* MENU */
-.menu{list-style:none;margin:0;padding:0;display:flex}
+.menu{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap}
 .menu>li{position:relative}
 .menu>li>a{
   padding:14px 16px;
@@ -110,16 +111,25 @@ body{margin:0;background:#f8fafc;color:#1e293b}
   background:rgba(255,255,255,.2);
   font-size:14px;
 }
+
+/* DROPDOWN */
 .dropdown{
-  display:none;position:absolute;top:100%;left:0;
-  background:#fff;min-width:300px;
-  max-height:70vh;overflow:auto;
+  display:none;
+  position:absolute;
+  top:100%;left:0;
+  background:#fff;
+  min-width:300px;
+  max-height:70vh;
+  overflow:auto;
   box-shadow:0 10px 25px rgba(0,0,0,.15);
+  z-index:5;
 }
 .dropdown a{
-  display:block;padding:10px 14px;
+  display:block;
+  padding:10px 14px;
   border-bottom:1px solid #eef2f7;
-  font-size:13px;color:#1e293b;
+  font-size:13px;
+  color:#1e293b;
   text-decoration:none;
 }
 .dropdown a:hover{background:#f1f5f9}
@@ -133,13 +143,30 @@ body{margin:0;background:#f8fafc;color:#1e293b}
 
 <!-- SPLASH -->
 <div id="splash">
-  <div class="logo-anim"></div>
+  <div class="jp-logo">
+    <svg viewBox="0 0 120 140">
+      <polygon points="60,10 66,26 84,26 70,36 76,54 60,44 44,54 50,36 36,26 54,26"
+        fill="#facc15"/>
+      <text x="60" y="105" text-anchor="middle"
+        font-size="64" font-weight="800"
+        fill="white">JP</text>
+    </svg>
+  </div>
   <p>Powered by JP</p>
 </div>
 
 <!-- LOGIN -->
 <div id="login">
   <div class="login-wrap">
+    <div class="jp-logo" style="margin:0 auto;transform:scale(.7)">
+      <svg viewBox="0 0 120 140">
+        <polygon points="60,10 66,26 84,26 70,36 76,54 60,44 44,54 50,36 36,26 54,26"
+          fill="#facc15"/>
+        <text x="60" y="105" text-anchor="middle"
+          font-size="64" font-weight="800"
+          fill="white">JP</text>
+      </svg>
+    </div>
     <h2>JP Solution</h2>
     <p>ERP Secure Login</p>
     <input id="username" placeholder="Username">
@@ -154,19 +181,84 @@ body{margin:0;background:#f8fafc;color:#1e293b}
   <div class="navbar">
     <div class="brand">JP Solution ERP</div>
     <ul class="menu">
-      <li><a><span class="icon">🧱</span>Masters</a></li>
-      <li><a><span class="icon">🔁</span>Transactions</a></li>
-      <li><a><span class="icon">📦</span>Inventory</a></li>
-      <li><a><span class="icon">👥</span>Customer</a></li>
-      <li><a><span class="icon">🧑‍💼</span>Sales</a></li>
-      <li><a><span class="icon">📊</span>Reports</a></li>
-      <li><a><span class="icon">⚙️</span>System</a></li>
-      <li><a><span class="icon">👤</span>User</a></li>
+
+      <li><a><span class="icon">🧱</span>Masters</a><div class="dropdown">
+        <a>Item Master</a>
+        <a>Price Master</a>
+        <a>Process Master</a>
+        <a>Cutting Rule (Z Rule)</a>
+        <a>Glass Size Master (Jumbo)</a>
+        <a>Glass Type Master</a>
+        <a>Route Master</a>
+        <a>Payment Terms Master</a>
+        <a>Film Type Master</a>
+        <a>Bank Master</a>
+        <a>Vehicle Master</a>
+        <a>Additional Charges Master</a>
+        <a>Remarks Master</a>
+      </div></li>
+
+      <li><a><span class="icon">🔁</span>Transactions</a><div class="dropdown">
+        <a>Proforma Invoice</a>
+        <a>Work Order</a>
+        <a>Sales Invoice</a>
+        <a>Cutting Optimizer</a>
+        <a>Label / Sticker Generation</a>
+      </div></li>
+
+      <li><a><span class="icon">📦</span>Inventory</a><div class="dropdown">
+        <a>Hardware Inventory</a>
+        <a>Glass Inventory</a>
+      </div></li>
+
+      <li><a><span class="icon">👥</span>Customer</a><div class="dropdown">
+        <a>Customer Registration</a>
+        <a>Customer Master</a>
+      </div></li>
+
+      <li><a><span class="icon">🧑‍💼</span>Sales</a><div class="dropdown">
+        <a>Salesperson Registration</a>
+        <a>Salesperson List</a>
+      </div></li>
+
+      <li><a><span class="icon">📊</span>Reports</a><div class="dropdown">
+        <a>Proforma Report</a>
+        <a>Invoice Report</a>
+        <a>Salesperson Performance Report</a>
+        <a>Production Report</a>
+        <a>Work Order Report</a>
+        <a>Glass Inventory Report</a>
+        <a>Breakage Report</a>
+        <a>Rejection Report</a>
+        <a>Pending Billing Report</a>
+        <a>Billed Area Report (Sq.Mtr)</a>
+        <a>Tally Export Report</a>
+        <a>Direct Invoice Report</a>
+        <a>Credit Note Report</a>
+      </div></li>
+
+      <li><a><span class="icon">⚙️</span>System</a><div class="dropdown">
+        <a>Default Configuration</a>
+        <a>File Storage Configuration</a>
+        <a>Network Configuration</a>
+        <a>Data Backup & Restore</a>
+        <a>SMS / Email Configuration</a>
+        <a>Billing Configuration</a>
+        <a>Print Configuration</a>
+        <a>User Access Control</a>
+        <a>Software Update</a>
+      </div></li>
+
+      <li><a><span class="icon">👤</span>User</a><div class="dropdown">
+        <a>User Management</a>
+      </div></li>
+
     </ul>
   </div>
+
   <div class="content">
     <h2>Welcome 👋</h2>
-    <p>ERP dashboard loaded successfully.</p>
+    <p>Login successful. ERP ready.</p>
   </div>
 </div>
 

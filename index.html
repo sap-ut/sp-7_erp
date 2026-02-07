@@ -9,77 +9,96 @@
 *{box-sizing:border-box;font-family:Segoe UI,Arial}
 body{margin:0;height:100vh}
 
-/* ===== SPLASH ===== */
+/* ========== SPLASH SCREEN ========== */
 #splash{
   position:fixed;inset:0;
-  background:#fff;
+  background:#ffffff;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
+  z-index:10;
 }
-#splash img{width:140px}
-#splash p{margin-top:12px;color:#555;font-size:14px}
+#splash img{width:160px}
+#splash p{margin-top:10px;color:#555;font-size:14px}
 
-/* ===== LOGIN ===== */
+/* ========== LOGIN ========== */
 #login{
   display:none;
   height:100vh;
   background:
-    url('data:image/png;base64,{{LOGO_BASE64}}') center/300px no-repeat,
+    url("/mnt/data/35288.png") center/300px no-repeat,
     linear-gradient(135deg,#0f2027,#203a43,#2c5364);
   display:flex;
   align-items:center;
   justify-content:center;
 }
-.card{
+.login-card{
   width:360px;
   background:rgba(255,255,255,.95);
   padding:28px;
   border-radius:14px;
   text-align:center;
 }
-.card h2{margin:0;color:#1e293b}
-.card p{font-size:13px;color:#64748b}
-input{
-  width:100%;padding:10px;margin:10px 0;
-  border-radius:8px;border:1px solid #cbd5e1;
+.login-card h2{margin:0;color:#1e293b}
+.login-card p{font-size:13px;color:#64748b}
+.login-card input{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  border-radius:8px;
+  border:1px solid #cbd5e1;
 }
-button{
-  width:100%;padding:11px;
-  background:#16a34a;color:#fff;
-  border:none;border-radius:10px;
+.login-card button{
+  width:100%;
+  padding:11px;
+  background:#16a34a;
+  border:none;
+  color:#fff;
+  border-radius:10px;
   font-weight:600;
   cursor:pointer;
 }
 .error{color:#dc2626;font-size:13px}
 
-/* ===== MENU ===== */
-#menuPage{display:none;height:100vh;background:#f1f5f9}
+/* ========== MENU PAGE ========== */
+#menuPage{
+  display:none;
+  height:100vh;
+  background:#f1f5f9;
+}
 .navbar{
   background:#16a34a;
   padding:0 16px;
   display:flex;
   align-items:center;
 }
-.brand{color:#fff;font-weight:700;font-size:18px;margin-right:30px}
+.brand{color:#fff;font-size:18px;font-weight:700;margin-right:30px}
 .menu{list-style:none;margin:0;padding:0;display:flex}
 .menu>li{position:relative}
 .menu>li>a{
-  color:#fff;text-decoration:none;
-  padding:14px 16px;display:block;
+  padding:14px 16px;
+  color:#fff;
+  text-decoration:none;
+  display:block;
 }
 .menu>li:hover{background:#15803d}
 .dropdown{
-  display:none;position:absolute;top:100%;left:0;
-  background:#fff;min-width:260px;
+  display:none;
+  position:absolute;
+  top:100%;
+  left:0;
+  background:#fff;
+  min-width:260px;
   box-shadow:0 10px 25px rgba(0,0,0,.15);
 }
 .dropdown a{
-  display:block;padding:10px 14px;
+  display:block;
+  padding:10px 14px;
   border-bottom:1px solid #eee;
-  color:#1e293b;text-decoration:none;
   font-size:13px;
+  color:#1e293b;
+  text-decoration:none;
 }
 .menu>li:hover .dropdown{display:block}
 .content{padding:30px}
@@ -96,17 +115,17 @@ button{
 
 <!-- LOGIN -->
 <div id="login">
-  <div class="card">
+  <div class="login-card">
     <h2>JP Solution</h2>
     <p>Secure ERP Login</p>
-    <input id="u" placeholder="Username">
-    <input id="p" type="password" placeholder="Password">
-    <button onclick="login()">Login</button>
+    <input id="username" placeholder="Username">
+    <input id="password" type="password" placeholder="Password">
+    <button onclick="doLogin()">Login</button>
     <div class="error" id="err"></div>
   </div>
 </div>
 
-<!-- MENU PAGE -->
+<!-- MENU -->
 <div id="menuPage">
   <div class="navbar">
     <div class="brand">JP Solution</div>
@@ -118,42 +137,51 @@ button{
         <a>Bank Master</a><a>Vehicle Master</a>
         <a>Additional Charges</a><a>Remarks</a>
       </div></li>
-
       <li><a>Transactions</a><div class="dropdown">
         <a>Proforma Invoice</a><a>Work Order</a>
         <a>Sales Invoice</a><a>Cutting Optimizer</a>
         <a>Sticker Generation</a>
       </div></li>
-
       <li><a>Inventory</a><div class="dropdown">
         <a>Hardware Inventory</a><a>Glass Inventory</a>
       </div></li>
-
       <li><a>Reports</a><div class="dropdown">
         <a>Invoice Report</a><a>Production Report</a>
         <a>Glass Inventory Report</a>
       </div></li>
     </ul>
   </div>
-
   <div class="content">
-    <h2>Welcome to JP Solution ERP</h2>
-    <p>Login successful.</p>
+    <h2>Welcome 👋</h2>
+    <p>Login successful. ERP menu active.</p>
   </div>
 </div>
 
 <script>
+/* USERS */
+const users = [
+  {u:"jp",p:"1234"},
+  {u:"admin",p:"admin"},
+  {u:"user",p:"user"}
+];
+
+/* SPLASH TIMER */
 setTimeout(()=>{
-  document.getElementById("splash").style.display="none";
-  document.getElementById("login").style.display="flex";
+  splash.style.display="none";
+  login.style.display="flex";
 },2000);
 
-function login(){
-  if(u.value==="jp" && p.value==="1234"){
+/* LOGIN */
+function doLogin(){
+  const u=username.value.trim();
+  const p=password.value.trim();
+  const ok=users.some(x=>x.u===u && x.p===p);
+
+  if(ok){
     login.style.display="none";
     menuPage.style.display="block";
   }else{
-    err.innerText="Invalid Login";
+    err.innerText="Invalid Username or Password";
   }
 }
 </script>

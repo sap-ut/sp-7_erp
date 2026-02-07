@@ -11,10 +11,6 @@
             --primary: #6366f1;
             --primary-light: #818cf8;
             --primary-dark: #4f46e5;
-            --secondary: #f472b6;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --info: #3b82f6;
             --background: #f8fafc;
             --surface: #ffffff;
             --text-primary: #374151;
@@ -174,26 +170,28 @@
             box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
         }
         
-        /* MAIN APPLICATION */
+        /* MAIN APPLICATION - ONLY MENU BAR */
         #mainApp {
             display: none;
             height: 100vh;
             background: var(--background);
         }
         
-        /* HEADER - COMPACT MENU BAR - TOP POSITION */
-        .header-container {
-            background: var(--surface);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        /* MENU BAR ONLY - AT THE TOP */
+        .menu-bar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
+            background: var(--surface);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
             z-index: 100;
-            width: 100%;
+            display: flex;
+            flex-direction: column;
         }
         
-        .main-nav {
+        /* TOP ROW - MENU ITEMS */
+        .menu-row {
             display: flex;
             overflow-x: auto;
             padding: 0.75rem 1rem;
@@ -204,7 +202,7 @@
             border-bottom: 1px solid var(--border);
         }
         
-        .main-nav::-webkit-scrollbar {
+        .menu-row::-webkit-scrollbar {
             display: none;
         }
         
@@ -221,14 +219,13 @@
             font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s;
             text-decoration: none;
             border-radius: 8px;
             display: flex;
             align-items: center;
             gap: 0.5rem;
             white-space: nowrap;
-            position: relative;
         }
         
         .nav-btn:hover {
@@ -236,25 +233,30 @@
             background: rgba(0, 0, 0, 0.03);
         }
         
-        .nav-btn.active {
-            color: var(--primary);
-            background: rgba(99, 102, 241, 0.12);
-        }
-        
         .nav-btn.dropdown-active {
             color: var(--primary);
             background: rgba(99, 102, 241, 0.08);
         }
         
-        /* Arrow indicator for dropdown */
-        .nav-btn.dropdown-toggle::after {
-            content: '▾';
-            margin-left: 0.25rem;
-            font-size: 0.8rem;
-            border: none !important;
+        /* BOTTOM ROW - USER INFO */
+        .user-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            background: var(--surface);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            width: 100%;
         }
         
-        /* DROPDOWN MENUS - CLICK TO SHOW */
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        /* DROPDOWN MENUS */
         .dropdown-menu {
             position: absolute;
             top: 100%;
@@ -328,36 +330,13 @@
             margin: 0.25rem 0;
         }
         
-        /* USER BAR */
-        .user-bar {
-            background: var(--surface);
-            padding: 0.75rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid var(--border);
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            width: 100%;
-        }
-        
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        /* MAIN CONTENT AREA - REMOVED COMPLETELY */
-        .main-content {
-            display: none; /* Completely hide white screen */
-        }
-        
-        /* MODULE CONTENT AREAS - ONLY SHOWS WHEN MODULE SELECTED */
+        /* MODULE CONTENT - ONLY SHOWS WHEN SELECTED */
         .module-content {
             display: none;
-            min-height: 100vh;
+            padding: 2rem;
+            margin-top: 100px;
             background: var(--background);
-            width: 100%;
+            min-height: calc(100vh - 100px);
         }
         
         .module-content.active {
@@ -383,41 +362,6 @@
             margin-bottom: 2rem;
             border-left: 4px solid var(--primary);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-            margin-top: 120px; /* To appear below menu bar */
-        }
-        
-        /* FLOATING BUTTONS */
-        .float-actions {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            z-index: 90;
-        }
-        
-        .float-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: none;
-            background: var(--surface);
-            color: var(--primary);
-            font-size: 1.2rem;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .float-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
-            background: var(--primary);
-            color: white;
         }
         
         /* RESPONSIVE */
@@ -436,9 +380,8 @@
                 font-size: 2rem;
             }
             
-            .main-nav {
+            .menu-row {
                 padding: 0.5rem;
-                overflow-x: scroll;
             }
             
             .nav-btn {
@@ -448,14 +391,14 @@
             
             .dropdown-menu {
                 position: fixed;
-                top: 60px;
+                top: 80px;
                 left: 1rem;
                 right: 1rem;
                 max-height: 60vh;
             }
             
-            .module-header {
-                margin-top: 100px;
+            .module-content {
+                margin-top: 80px;
                 padding: 1rem;
             }
         }
@@ -469,11 +412,7 @@
                 padding: 0.75rem;
             }
             
-            .nav-btn i {
-                font-size: 1rem;
-            }
-            
-            .user-bar {
+            .user-row {
                 padding: 0.75rem 1rem;
                 font-size: 0.75rem;
             }
@@ -508,31 +447,19 @@
         </div>
     </div>
 
-    <!-- MAIN APPLICATION -->
+    <!-- MAIN APPLICATION - ONLY MENU BAR -->
     <div id="mainApp">
-        <!-- FLOATING BUTTONS -->
-        <div class="float-actions">
-            <button class="float-btn" onclick="showHome()" title="Home">
-                <i class="fas fa-home"></i>
-            </button>
-            <button class="float-btn" onclick="handleSubModule('proforma')" title="Proforma">
-                <i class="fas fa-file-invoice"></i>
-            </button>
-            <button class="float-btn" onclick="window.print()" title="Print">
-                <i class="fas fa-print"></i>
-            </button>
-        </div>
-
-        <!-- HEADER - MENU BAR AT THE TOP -->
-        <header class="header-container">
-            <nav class="main-nav">
+        <!-- MENU BAR ONLY -->
+        <div class="menu-bar">
+            <!-- TOP ROW - MENU ITEMS -->
+            <div class="menu-row">
                 <!-- 🧱 MASTERS -->
                 <div class="nav-item">
                     <button class="nav-btn dropdown-toggle" onclick="toggleDropdown(this)">
                         <i class="fas fa-cubes"></i>
                         <span>Masters</span>
                     </button>
-                    <div class="dropdown-menu" data-dropdown="masters">
+                    <div class="dropdown-menu">
                         <div class="dropdown-header">
                             <i class="fas fa-box"></i> Product Masters
                         </div>
@@ -590,7 +517,7 @@
                         <i class="fas fa-exchange-alt"></i>
                         <span>Transactions</span>
                     </button>
-                    <div class="dropdown-menu" data-dropdown="transactions">
+                    <div class="dropdown-menu">
                         <div class="dropdown-header">
                             <i class="fas fa-file-invoice-dollar"></i> Sales Transactions
                         </div>
@@ -630,7 +557,7 @@
                         <i class="fas fa-warehouse"></i>
                         <span>Inventory</span>
                     </button>
-                    <div class="dropdown-menu" data-dropdown="inventory">
+                    <div class="dropdown-menu">
                         <div class="dropdown-header">
                             <i class="fas fa-boxes"></i> Stock Management
                         </div>
@@ -649,7 +576,7 @@
                         <i class="fas fa-sliders-h"></i>
                         <span>Settings</span>
                     </button>
-                    <div class="dropdown-menu" data-dropdown="settings">
+                    <div class="dropdown-menu">
                         <div class="dropdown-header">
                             <i class="fas fa-tools"></i> Configuration
                         </div>
@@ -695,7 +622,7 @@
                         <i class="fas fa-users"></i>
                         <span>Customers</span>
                     </button>
-                    <div class="dropdown-menu" data-dropdown="customers">
+                    <div class="dropdown-menu">
                         <div class="dropdown-header">
                             <i class="fas fa-address-card"></i> Customer Management
                         </div>
@@ -714,7 +641,7 @@
                         <i class="fas fa-user-tie"></i>
                         <span>Sales</span>
                     </button>
-                    <div class="dropdown-menu" data-dropdown="sales">
+                    <div class="dropdown-menu">
                         <div class="dropdown-header">
                             <i class="fas fa-chart-line"></i> Sales Team
                         </div>
@@ -733,7 +660,7 @@
                         <i class="fas fa-chart-bar"></i>
                         <span>Reports</span>
                     </button>
-                    <div class="dropdown-menu" data-dropdown="reports" style="max-height: 500px;">
+                    <div class="dropdown-menu" style="max-height: 500px;">
                         <div class="dropdown-header">
                             <i class="fas fa-file-invoice"></i> Sales Reports
                         </div>
@@ -798,10 +725,10 @@
                         <span>Users</span>
                     </button>
                 </div>
-            </nav>
+            </div>
             
-            <!-- USER BAR -->
-            <div class="user-bar">
+            <!-- BOTTOM ROW - USER INFO -->
+            <div class="user-row">
                 <div class="text-muted">
                     <i class="fas fa-calendar-alt me-1"></i>
                     <span id="currentDateTime"></span>
@@ -813,24 +740,19 @@
                     </button>
                 </div>
             </div>
-        </header>
-
-        <!-- NO MAIN CONTENT AREA - COMPLETELY REMOVED -->
-        <!-- Only module content will show when needed -->
+        </div>
         
-        <!-- MODULE CONTENT AREAS - HIDDEN BY DEFAULT -->
+        <!-- MODULE CONTENT - HIDDEN BY DEFAULT -->
         <div class="module-content" id="moduleContent">
-            <!-- Content will be loaded here when a module is selected -->
+            <!-- Content loads here -->
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         let currentDropdown = null;
         
-        // Initialize flow
         document.addEventListener('DOMContentLoaded', function() {
-            // Start with splash screen
+            // Splash screen
             setTimeout(function() {
                 document.getElementById('splashScreen').style.animation = 'splashFade 3s ease-in-out forwards';
                 setTimeout(function() {
@@ -842,22 +764,15 @@
             updateDateTime();
             setInterval(updateDateTime, 1000);
             
-            // Login form handler
+            // Login form
             document.getElementById('loginForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 const username = document.getElementById('username').value;
                 const password = document.getElementById('password').value;
                 
-                // Simple validation
                 if (username === 'admin' && password === 'admin123') {
-                    // Hide login screen
                     document.getElementById('loginScreen').style.display = 'none';
-                    
-                    // Show main application
                     document.getElementById('mainApp').style.display = 'block';
-                    
-                    // Show just the menu bar (no white screen)
-                    // Nothing else needs to be shown
                 } else {
                     alert('Invalid credentials! Use admin / admin123');
                 }
@@ -871,7 +786,6 @@
             });
         });
         
-        // Update date and time
         function updateDateTime() {
             const now = new Date();
             const dateStr = now.toLocaleDateString('en-IN', {
@@ -889,19 +803,15 @@
                 `${dateStr} | ${timeStr}`;
         }
         
-        // Toggle dropdown on click
         function toggleDropdown(button) {
             const dropdown = button.nextElementSibling;
             
-            // Close all other dropdowns
             closeAllDropdowns();
             
-            // Remove active class from all nav buttons
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove('dropdown-active');
             });
             
-            // If this dropdown is not already open, open it
             if (!dropdown.classList.contains('show')) {
                 dropdown.classList.add('show');
                 button.classList.add('dropdown-active');
@@ -913,7 +823,6 @@
             event.stopPropagation();
         }
         
-        // Close all dropdowns
         function closeAllDropdowns() {
             document.querySelectorAll('.dropdown-menu').forEach(dropdown => {
                 dropdown.classList.remove('show');
@@ -926,176 +835,57 @@
             currentDropdown = null;
         }
         
-        // Show home (just menu bar)
-        function showHome() {
-            // Close all dropdowns
-            closeAllDropdowns();
-            
-            // Hide module content if visible
-            document.getElementById('moduleContent').style.display = 'none';
-            document.getElementById('moduleContent').classList.remove('active');
-            
-            // Remove active class from all nav buttons
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-        }
-        
-        // Handle sub-module click
         function handleSubModule(subModule) {
-            // Close all dropdowns
             closeAllDropdowns();
             
-            // Show module content
             const moduleContent = document.getElementById('moduleContent');
             moduleContent.style.display = 'block';
             moduleContent.classList.add('active');
             
-            // Show module name in content area
             const moduleName = subModule.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
             moduleContent.innerHTML = `
                 <div class="module-header">
                     <h3><i class="fas fa-${getModuleIcon(subModule)} me-2"></i>${moduleName}</h3>
-                    <p class="text-muted mb-0">${getModuleDescription(subModule)}</p>
+                    <p class="text-muted mb-0">Module content will be loaded here.</p>
                 </div>
                 <div class="container">
                     <div class="alert alert-info">
                         <i class="fas fa-info-circle me-2"></i>
-                        This is the <strong>${moduleName}</strong> module. Actual content will be loaded here.
+                        This is the <strong>${moduleName}</strong> module.
                     </div>
-                    <div class="row mt-4">
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Module Features</h5>
-                                    <p class="card-text">All features related to ${moduleName.toLowerCase()} will be available here.</p>
-                                    <button class="btn btn-primary" onclick="showHome()">
-                                        <i class="fas fa-arrow-left me-2"></i>Back to Home
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Quick Actions</h5>
-                                    <div class="d-grid gap-2">
-                                        <button class="btn btn-outline-primary">Add New</button>
-                                        <button class="btn btn-outline-success">View List</button>
-                                        <button class="btn btn-outline-info">Generate Report</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <button class="btn btn-primary" onclick="closeModule()">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Menu
+                    </button>
                 </div>
             `;
-            
-            // Remove active class from all nav buttons
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
         }
         
-        // Get module icon
+        function closeModule() {
+            document.getElementById('moduleContent').style.display = 'none';
+            document.getElementById('moduleContent').classList.remove('active');
+        }
+        
         function getModuleIcon(subModule) {
             const iconMap = {
-                'item-master': 'box',
-                'price-master': 'tag',
-                'process-master': 'cogs',
-                'cutting-rule': 'cut',
-                'glass-size': 'expand-alt',
-                'glass-type': 'glass-whiskey',
-                'route-master': 'route',
-                'payment-terms': 'handshake',
-                'film-type': 'film',
-                'bank-master': 'university',
-                'vehicle-master': 'truck',
-                'additional-charges': 'coins',
-                'remarks-master': 'comment-alt',
-                'proforma': 'file-invoice-dollar',
-                'work-order': 'clipboard-list',
-                'sales-invoice': 'file-invoice',
-                'direct-invoice': 'receipt',
-                'credit-note': 'undo-alt',
-                'cutting-optimizer': 'cut',
-                'label-generation': 'tags',
-                'hardware-inventory': 'tools',
-                'glass-inventory': 'glass-whiskey',
-                'default-config': 'cog',
-                'file-storage': 'hdd',
-                'network-config': 'network-wired',
-                'data-backup': 'database',
-                'sms-email': 'envelope',
-                'billing-config': 'file-invoice-dollar',
-                'print-config': 'print',
-                'user-access': 'user-shield',
-                'software-update': 'sync-alt',
-                'customer-registration': 'user-plus',
-                'customer-list': 'list-alt',
-                'salesperson-registration': 'user-plus',
-                'salesperson-list': 'users-cog',
-                'proforma-report': 'file-invoice',
-                'invoice-report': 'file-invoice-dollar',
-                'salesperson-performance': 'chart-line',
-                'production-report': 'industry',
-                'work-order-report': 'clipboard-check',
-                'glass-inventory-report': 'boxes',
-                'breakage-report': 'times-circle',
-                'rejection-report': 'ban',
-                'direct-invoice-report': 'receipt',
-                'credit-note-report': 'undo-alt',
-                'pending-billing': 'clock',
-                'billed-area': 'ruler-combined',
-                'tally-export': 'file-export',
-                'user-management': 'users-cog'
+                'item-master': 'box', 'price-master': 'tag', 'process-master': 'cogs',
+                'proforma': 'file-invoice-dollar', 'sales-invoice': 'file-invoice'
             };
-            
             return iconMap[subModule] || 'cog';
         }
         
-        // Get module description
-        function getModuleDescription(subModule) {
-            const descMap = {
-                'item-master': 'Manage product items and specifications',
-                'price-master': 'Configure pricing for all products',
-                'proforma': 'Create and manage proforma invoices',
-                'sales-invoice': 'Generate sales invoices',
-                'customer-registration': 'Register new customers',
-                'user-management': 'Manage system users and permissions'
-            };
-            
-            return descMap[subModule] || 'Module management section';
-        }
-        
-        // Logout function
         function logout() {
             if(confirm('Are you sure you want to logout?')) {
-                // Hide main app
                 document.getElementById('mainApp').style.display = 'none';
-                
-                // Show login screen
                 document.getElementById('loginScreen').style.display = 'flex';
-                
-                // Clear form
                 document.getElementById('loginForm').reset();
-                
-                alert('Logged out successfully');
+                closeModule();
             }
         }
         
-        // Keyboard shortcuts
         document.addEventListener('keydown', function(e) {
-            if(e.ctrlKey && e.key === 'Home') {
-                e.preventDefault();
-                showHome();
-            }
-            if(e.ctrlKey && e.key === 'p') {
-                e.preventDefault();
-                handleSubModule('proforma');
-            }
             if(e.key === 'Escape') {
                 closeAllDropdowns();
+                closeModule();
             }
         });
     </script>

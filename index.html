@@ -1,226 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>JP Solution ERP</title>
+<title>JP Login Test</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,Arial}
-body{background:#e5e7eb;color:#111}
-
-/* ===== LOGO ===== */
-.logo{
-  width:160px;height:160px;border-radius:50%;
-  background:linear-gradient(135deg,#0ea5e9,#22c55e);
-  display:flex;align-items:center;justify-content:center;
-  position:relative;
-  box-shadow:0 25px 45px rgba(0,0,0,.35);
-}
-.logo span{
-  font-size:70px;font-weight:800;color:#fff;
-}
-.logo::after{
-  content:"★";
-  position:absolute;
-  top:-10px; right:18px;
-  font-size:28px;color:#fde047;
-}
-.pop{animation:pop 1.4s ease}
-@keyframes pop{
-  from{opacity:0;transform:scale(.5)}
-  to{opacity:1;transform:scale(1)}
-}
-
-/* ===== SPLASH ===== */
-#splash{
+body{
+  margin:0;
   height:100vh;
-  background:#020617;
-  color:#fff;
   display:flex;
-  flex-direction:column;
   align-items:center;
   justify-content:center;
+  background:#0f172a;
+  font-family:Arial;
 }
-
-/* ===== LOGIN ===== */
-#login{
-  display:none;
-  height:100vh;
-  background:
-    radial-gradient(circle at center,rgba(34,197,94,.25),transparent 60%),
-    #020617;
-  align-items:center;
-  justify-content:center;
-}
-.login-box{
-  width:360px;
+.box{
   background:#fff;
-  border-radius:18px;
-  padding:28px;
-  box-shadow:0 30px 60px rgba(0,0,0,.35);
-  position:relative;
+  padding:30px;
+  border-radius:12px;
+  width:300px;
+  box-shadow:0 20px 40px rgba(0,0,0,.4);
 }
-.login-box::before{
-  content:"JP";
-  position:absolute;
-  inset:0;
-  font-size:180px;
-  font-weight:900;
-  color:rgba(0,0,0,.04);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.login-box h2{
-  text-align:center;
-  margin-bottom:16px;
-  position:relative;
-}
-.login-box input{
+h2{text-align:center}
+input,button{
   width:100%;
-  padding:12px;
-  margin:8px 0;
-  border-radius:10px;
-  border:1px solid #cbd5e1;
-  position:relative;
-}
-.login-box button{
-  width:100%;
-  padding:12px;
+  padding:10px;
   margin-top:10px;
-  border:none;
-  border-radius:10px;
+}
+button{
   background:#16a34a;
   color:#fff;
-  font-weight:600;
+  border:none;
   cursor:pointer;
-}
-#error{
-  text-align:center;
-  color:#dc2626;
-  margin-top:8px;
-}
-
-/* ===== DASHBOARD ===== */
-#dashboard{display:none}
-.topbar{
-  background:#020617;
-  color:#fff;
-  padding:14px 20px;
-  display:flex;
-  align-items:center;
-  gap:14px;
-}
-.topbar .mini{
-  width:42px;height:42px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#0ea5e9,#22c55e);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:800;
-}
-.menu{
-  background:#020617;
-  padding:12px;
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-}
-.menu button{
-  padding:10px 14px;
-  border-radius:10px;
-  background:#0f172a;
-  border:1px solid #1e293b;
-  color:#fff;
-  cursor:pointer;
-}
-.menu button:hover{background:#16a34a}
-.content{
-  padding:24px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- SPLASH -->
-<div id="splash">
-  <div class="logo pop"><span>JP</span></div>
-  <p style="margin-top:14px;opacity:.85">Powered by JP</p>
-</div>
-
-<!-- LOGIN -->
-<div id="login">
-  <div class="login-box pop">
-    <h2>Login</h2>
-    <input id="username" placeholder="Username">
-    <input id="password" type="password" placeholder="Password">
-    <button onclick="doLogin()">Login</button>
-    <div id="error"></div>
-  </div>
-</div>
-
-<!-- DASHBOARD -->
-<div id="dashboard">
-  <div class="topbar">
-    <div class="mini">JP</div>
-    <h3>JP Solution ERP</h3>
-  </div>
-
-  <div class="menu">
-    <button>Masters</button>
-    <button>Transactions</button>
-    <button>Inventory</button>
-    <button>System Settings</button>
-    <button>Customers</button>
-    <button>Sales</button>
-    <button>Reports</button>
-    <button>User Management</button>
-  </div>
-
-  <div class="content">
-    <h2>Welcome to JP ERP</h2>
-    <p>Select any menu option to continue.</p>
-  </div>
+<div class="box">
+  <h2>JP Login</h2>
+  <input id="u" placeholder="Username">
+  <input id="p" type="password" placeholder="Password">
+  <button onclick="login()">Login</button>
 </div>
 
 <script>
-const users = [
-  {u:"admin", p:"admin"},
-  {u:"jp", p:"1234"},
-  {u:"user", p:"user"}
-];
+function login(){
+  var u = document.getElementById("u").value;
+  var p = document.getElementById("p").value;
 
-const splash = document.getElementById("splash");
-const loginBox = document.getElementById("login");
-const dash = document.getElementById("dashboard");
-const err = document.getElementById("error");
+  alert("Username: " + u + "\nPassword: " + p);
 
-/* splash exactly 2 seconds */
-setTimeout(()=>{
-  splash.style.display = "none";
-  loginBox.style.display = "flex";
-},2000);
-
-function doLogin(){
-  const u = document.getElementById("username").value.trim().toLowerCase();
-  const p = document.getElementById("password").value.trim();
-  err.innerText = "";
-
-  const ok = users.find(x => x.u === u && x.p === p);
-  if(ok){
-    loginBox.style.display = "none";
-    dash.style.display = "block";
+  if(u === "jp" && p === "1234"){
+    alert("LOGIN SUCCESS");
   }else{
-    err.innerText = "Invalid username or password";
+    alert("LOGIN FAILED");
   }
 }
-
-document.addEventListener("keydown",e=>{
-  if(e.key==="Enter") doLogin();
-});
 </script>
 
 </body>

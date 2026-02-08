@@ -7,19 +7,22 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,Arial}
-body{background:#0f172a;color:#fff}
+body{background:#eaf3ff;color:#0f172a}
+
+/* ===== COLORS ===== */
+:root{
+  --blue-dark:#0b3c6d;
+  --blue:#1e88e5;
+  --blue-light:#e3f2fd;
+  --white:#ffffff;
+}
 
 /* ===== LOGO ===== */
 .jp-logo{
   width:150px;height:150px;border-radius:50%;
-  background:linear-gradient(135deg,#22c55e,#0ea5e9);
+  background:linear-gradient(135deg,#1e88e5,#64b5f6);
   display:flex;align-items:center;justify-content:center;
-  font-size:64px;font-weight:800;
-  position:relative;
-}
-.jp-logo::after{
-  content:"★";position:absolute;top:-10px;right:18px;
-  font-size:28px;color:#fde047;
+  font-size:64px;font-weight:800;color:#fff;
 }
 
 /* ===== SPLASH ===== */
@@ -30,6 +33,8 @@ body{background:#0f172a;color:#fff}
   justify-content:center;
   align-items:center;
   gap:14px;
+  background:var(--blue-dark);
+  color:#fff;
 }
 
 /* ===== LOGIN ===== */
@@ -38,64 +43,87 @@ body{background:#0f172a;color:#fff}
   height:100vh;
   align-items:center;
   justify-content:center;
-  background:
-    radial-gradient(circle at center,rgba(34,197,94,.25),transparent 60%),
-    #020617;
+  background:linear-gradient(120deg,#e3f2fd,#bbdefb);
 }
 .login-box{
   width:360px;
   background:#fff;
-  color:#000;
   border-radius:18px;
   padding:28px;
-  box-shadow:0 30px 60px rgba(0,0,0,.4);
+  box-shadow:0 20px 40px rgba(0,0,0,.2);
 }
-.login-box h2{text-align:center;margin-bottom:16px}
+.login-box h2{text-align:center;margin-bottom:16px;color:var(--blue)}
 .login-box input{
   width:100%;
   padding:12px;
   margin:8px 0;
   border-radius:10px;
-  border:1px solid #cbd5e1;
+  border:1px solid #90caf9;
 }
 .login-box button{
   width:100%;
   padding:12px;
   border:none;
   border-radius:10px;
-  background:#16a34a;
+  background:var(--blue);
   color:#fff;
   font-weight:600;
   cursor:pointer;
 }
-#error{text-align:center;color:#dc2626;margin-top:8px}
+#error{text-align:center;color:#e53935;margin-top:8px}
 
 /* ===== DASHBOARD ===== */
 #dashboard{display:none}
+
+/* Topbar */
 .topbar{
-  background:#020617;
-  padding:14px 20px;
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-.menu{
-  background:#020617;
-  padding:12px;
-  display:flex;
-  gap:10px;
-  overflow-x:auto;
-}
-.menu button{
-  padding:10px 14px;
-  background:#0f172a;
-  border:1px solid #1e293b;
-  border-radius:10px;
+  background:var(--blue-dark);
   color:#fff;
+  padding:14px 20px;
+  font-size:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+/* Layout */
+.main{
+  display:flex;
+  min-height:calc(100vh - 56px);
+}
+
+/* Sidebar */
+.sidebar{
+  width:240px;
+  background:#0d47a1;
+  color:#fff;
+  padding:14px;
+}
+.sidebar button{
+  width:100%;
+  padding:12px;
+  margin-bottom:8px;
+  background:transparent;
+  border:none;
+  color:#fff;
+  text-align:left;
+  border-radius:8px;
   cursor:pointer;
 }
-.menu button:hover{background:#16a34a}
-.content{padding:24px}
+.sidebar button:hover{background:#1565c0}
+
+/* Content */
+.content{
+  flex:1;
+  padding:24px;
+  background:var(--blue-light);
+}
+.card{
+  background:#fff;
+  padding:20px;
+  border-radius:16px;
+  box-shadow:0 10px 20px rgba(0,0,0,.1);
+}
 </style>
 </head>
 
@@ -104,7 +132,7 @@ body{background:#0f172a;color:#fff}
 <!-- SPLASH -->
 <div id="splash">
   <div class="jp-logo">JP</div>
-  <div>Powered by JP</div>
+  <div>JP Solution ERP</div>
 </div>
 
 <!-- LOGIN -->
@@ -120,47 +148,65 @@ body{background:#0f172a;color:#fff}
 
 <!-- DASHBOARD -->
 <div id="dashboard">
-  <div class="topbar">JP Solution ERP</div>
-  <div class="menu">
-    <button>Masters</button>
-    <button>Transactions</button>
-    <button>Inventory</button>
-    <button>System</button>
-    <button>Customers</button>
-    <button>Sales</button>
-    <button>Reports</button>
-    <button>Users</button>
+  <div class="topbar">
+    <div>JP Solution ERP</div>
+    <div style="cursor:pointer" onclick="logout()">Logout</div>
   </div>
-  <div class="content">
-    <h2>Welcome</h2>
-    <p>Login successful.</p>
+
+  <div class="main">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <button onclick="show('Masters')">Masters</button>
+      <button onclick="show('Transactions')">Transactions</button>
+      <button onclick="show('Inventory')">Inventory</button>
+      <button onclick="show('Sales')">Sales</button>
+      <button onclick="show('Purchase')">Purchase</button>
+      <button onclick="show('Customers')">Customers</button>
+      <button onclick="show('Vendors')">Vendors</button>
+      <button onclick="show('Reports')">Reports</button>
+      <button onclick="show('Users')">Users</button>
+      <button onclick="show('Settings')">Settings</button>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+      <div class="card">
+        <h2 id="title">Welcome</h2>
+        <p id="text">Select any option from left menu.</p>
+      </div>
+    </div>
   </div>
 </div>
 
 <script>
-/* splash exactly 2 sec */
-setTimeout(function(){
-  document.getElementById("splash").style.display="none";
-  document.getElementById("login").style.display="flex";
+/* splash 2 sec */
+setTimeout(()=>{
+  splash.style.display="none";
+  login.style.display="flex";
 },2000);
 
 /* users */
-var users = {
-  admin:"admin",
-  jp:"1234",
-  user:"user"
-};
+var users={admin:"admin",jp:"1234",user:"user"};
 
 function doLogin(){
-  var u = document.getElementById("username").value.trim();
-  var p = document.getElementById("password").value.trim();
-
-  if(users[u] && users[u] === p){
-    document.getElementById("login").style.display="none";
-    document.getElementById("dashboard").style.display="block";
+  var u=username.value.trim();
+  var p=password.value.trim();
+  if(users[u] && users[u]===p){
+    login.style.display="none";
+    dashboard.style.display="block";
   }else{
-    document.getElementById("error").innerText="Invalid username or password";
+    error.innerText="Invalid username or password";
   }
+}
+
+function logout(){
+  dashboard.style.display="none";
+  login.style.display="flex";
+}
+
+function show(name){
+  title.innerText=name;
+  text.innerText=name+" module UI ready. Next step forms & logic.";
 }
 </script>
 
